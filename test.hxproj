@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="main.js" />
     <movie fps="60" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="2000" />
+    <movie height="1000" />
     <movie version="1" />
     <movie minorVersion="0" />
     <movie platform="JavaScript" />

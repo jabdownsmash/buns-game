@@ -6,6 +6,168 @@ function $extend(from, fields) {
 	if( fields.toString !== Object.prototype.toString ) proto.toString = fields.toString;
 	return proto;
 }
+var h3d_prim_Primitive = function() { };
+$hxClasses["h3d.prim.Primitive"] = h3d_prim_Primitive;
+h3d_prim_Primitive.__name__ = true;
+h3d_prim_Primitive.prototype = {
+	alloc: function(engine) {
+		throw new js__$Boot_HaxeError("not implemented");
+	}
+	,render: function(engine) {
+		if(this.buffer == null || this.buffer.isDisposed()) this.alloc(engine);
+		if(this.indexes == null) {
+			if((this.buffer.flags & 1 << h3d_BufferFlag.Quads[1]) != 0) engine.renderBuffer(this.buffer,engine.mem.quadIndexes,2,0,-1); else engine.renderBuffer(this.buffer,engine.mem.triIndexes,3,0,-1);
+		} else engine.renderIndexed(this.buffer,this.indexes);
+	}
+	,dispose: function() {
+		if(this.buffer != null) {
+			this.buffer.dispose();
+			this.buffer = null;
+		}
+		if(this.indexes != null) {
+			this.indexes.dispose();
+			this.indexes = null;
+		}
+	}
+	,__class__: h3d_prim_Primitive
+};
+var h3d_prim_Polygon = function(points,idx) {
+	this.translatedZ = 0.;
+	this.translatedY = 0.;
+	this.translatedX = 0.;
+	this.points = points;
+	this.idx = idx;
+};
+$hxClasses["h3d.prim.Polygon"] = h3d_prim_Polygon;
+h3d_prim_Polygon.__name__ = true;
+h3d_prim_Polygon.__super__ = h3d_prim_Primitive;
+h3d_prim_Polygon.prototype = $extend(h3d_prim_Primitive.prototype,{
+	alloc: function(engine) {
+		this.dispose();
+		var size = 3;
+		if(this.normals != null) size += 3;
+		if(this.uvs != null) size += 2;
+		if(this.colors != null) size += 3;
+		var buf;
+		var this1;
+		this1 = new Array(0);
+		buf = this1;
+		var _g1 = 0;
+		var _g = this.points.length;
+		while(_g1 < _g) {
+			var k = _g1++;
+			var p = this.points[k];
+			buf.push(p.x);
+			buf.push(p.y);
+			buf.push(p.z);
+			if(this.normals != null) {
+				var n = this.normals[k];
+				buf.push(n.x);
+				buf.push(n.y);
+				buf.push(n.z);
+			}
+			if(this.uvs != null) {
+				var t = this.uvs[k];
+				buf.push(t.u);
+				buf.push(t.v);
+			}
+			if(this.colors != null) {
+				var c = this.colors[k];
+				buf.push(c.x);
+				buf.push(c.y);
+				buf.push(c.z);
+			}
+		}
+		var flags = [];
+		if(this.idx == null) flags.push(h3d_BufferFlag.Triangles);
+		if(this.normals == null) flags.push(h3d_BufferFlag.RawFormat);
+		this.buffer = h3d_Buffer.ofFloats(buf,size,flags);
+		if(this.idx != null) this.indexes = h3d_Indexes.alloc(this.idx);
+	}
+	,translate: function(dx,dy,dz) {
+		this.translatedX += dx;
+		this.translatedY += dy;
+		this.translatedZ += dz;
+		var _g = 0;
+		var _g1 = this.points;
+		while(_g < _g1.length) {
+			var p = _g1[_g];
+			++_g;
+			p.x += dx;
+			p.y += dy;
+			p.z += dz;
+		}
+	}
+	,__class__: h3d_prim_Polygon
+});
+var CustomPolygon = function(p,idx) {
+	this.pointList = p;
+	this.idList = idx;
+	h3d_prim_Polygon.call(this,p,idx);
+};
+$hxClasses["CustomPolygon"] = CustomPolygon;
+CustomPolygon.__name__ = true;
+CustomPolygon.__super__ = h3d_prim_Polygon;
+CustomPolygon.prototype = $extend(h3d_prim_Polygon.prototype,{
+	addUVs: function() {
+		var z = new h3d_prim_UV(0,1);
+		var x = new h3d_prim_UV(1,1);
+		var y = new h3d_prim_UV(0,0);
+		var o = new h3d_prim_UV(1,0);
+		this.uvs = [z,x,o,z,o,y,x,z,y,x,y,o,x,z,y,x,y,o,z,o,x,z,y,o,x,y,z,x,o,y,z,o,x,z,y,o];
+		var r = new h3d_col_Point(1,0,0);
+		var g = new h3d_col_Point(0,1,0);
+		var b = new h3d_col_Point(0,0,1);
+		var x1 = new h3d_col_Point(1,1,1);
+		this.colors = [r,g,b,r,b,x1,g,r,x1,g,x1,b,g,r,x1,g,x1,b,r,b,g,r,x1,b,g,x1,r,g,b,x1,r,b,g,r,x1,b];
+	}
+	,reload: function() {
+		if(this.idList != null && this.pointList.length != this.idList.length) {
+			var p = [];
+			var used = [];
+			var _g1 = 0;
+			var _g = this.idList.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				p.push(this.pointList[this.idList[i]].clone());
+			}
+			if(this.normals != null) {
+				var n = [];
+				var _g11 = 0;
+				var _g2 = this.idList.length;
+				while(_g11 < _g2) {
+					var i1 = _g11++;
+					n.push(this.normals[this.idList[i1]].clone());
+				}
+				this.normals = n;
+			}
+			if(this.colors != null) {
+				var n1 = [];
+				var _g12 = 0;
+				var _g3 = this.idList.length;
+				while(_g12 < _g3) {
+					var i2 = _g12++;
+					n1.push(this.colors[this.idList[i2]].clone());
+				}
+				this.colors = n1;
+			}
+			if(this.uvs != null) {
+				var t = [];
+				var _g13 = 0;
+				var _g4 = this.idList.length;
+				while(_g13 < _g4) {
+					var i3 = _g13++;
+					t.push(this.uvs[this.idList[i3]].clone());
+				}
+				this.uvs = t;
+			}
+			this.points = p;
+			this.idx = null;
+			this.alloc(null);
+		}
+	}
+	,__class__: CustomPolygon
+});
 var EReg = function(r,opt) {
 	opt = opt.split("u").join("");
 	this.r = new RegExp(r,opt);
@@ -206,10 +368,52 @@ Main.main = function() {
 Main.__super__ = hxd_App;
 Main.prototype = $extend(hxd_App.prototype,{
 	init: function() {
-		this.prim = new h3d_prim_Cube();
+		var x = 1;
+		var y = 1;
+		var z = 1;
+		var p = [new h3d_col_Point(0,0,0),new h3d_col_Point(x,0,0),new h3d_col_Point(0,y,0),new h3d_col_Point(0,0,z),new h3d_col_Point(x,y,0),new h3d_col_Point(x,0,z),new h3d_col_Point(0,y,z),new h3d_col_Point(x,y,z)];
+		var idx;
+		var this1;
+		this1 = new Array(0);
+		idx = this1;
+		idx.push(0);
+		idx.push(1);
+		idx.push(5);
+		idx.push(0);
+		idx.push(5);
+		idx.push(3);
+		idx.push(1);
+		idx.push(4);
+		idx.push(7);
+		idx.push(1);
+		idx.push(7);
+		idx.push(5);
+		idx.push(3);
+		idx.push(5);
+		idx.push(7);
+		idx.push(3);
+		idx.push(7);
+		idx.push(6);
+		idx.push(0);
+		idx.push(6);
+		idx.push(2);
+		idx.push(0);
+		idx.push(3);
+		idx.push(6);
+		idx.push(2);
+		idx.push(7);
+		idx.push(4);
+		idx.push(2);
+		idx.push(6);
+		idx.push(7);
+		idx.push(0);
+		idx.push(4);
+		idx.push(1);
+		idx.push(0);
+		idx.push(2);
+		idx.push(4);
+		this.prim = new CustomPolygon(p,idx);
 		this.prim.translate(-0.5,-0.5,-0.5);
-		this.prim.unindex();
-		this.prim.addNormals();
 		this.prim.addUVs();
 		var tex = hxd_Res.get_loader().loadImage("hxlogo.png").toTexture();
 		var mat = new h3d_mat_MeshMaterial(tex);
@@ -226,7 +430,8 @@ Main.prototype = $extend(hxd_App.prototype,{
 	}
 	,update: function(dt) {
 		this.time += 0.01 * dt;
-		this.prim.points[0].x += .1;
+		this.prim.pointList[2].x += 1;
+		this.prim.reload();
 		var dist = 5;
 		this.s3d.camera.pos.set(Math.cos(this.time) * dist,Math.sin(this.time) * dist,dist * 0.7 * Math.sin(this.time),null);
 		this.obj2.setRotateAxis(-0.5,2,Math.cos(this.time),this.time + Math.PI / 2);
@@ -3316,34 +3521,6 @@ h2d_Tile.prototype = {
 	}
 	,__class__: h2d_Tile
 };
-var h3d_prim_Primitive = function() { };
-$hxClasses["h3d.prim.Primitive"] = h3d_prim_Primitive;
-h3d_prim_Primitive.__name__ = true;
-h3d_prim_Primitive.prototype = {
-	triCount: function() {
-		if(this.indexes != null) return this.indexes.count / 3 | 0; else if(this.buffer == null) return 0; else return Std["int"](this.buffer.totalVertices() / 3);
-	}
-	,alloc: function(engine) {
-		throw new js__$Boot_HaxeError("not implemented");
-	}
-	,render: function(engine) {
-		if(this.buffer == null || this.buffer.isDisposed()) this.alloc(engine);
-		if(this.indexes == null) {
-			if((this.buffer.flags & 1 << h3d_BufferFlag.Quads[1]) != 0) engine.renderBuffer(this.buffer,engine.mem.quadIndexes,2,0,-1); else engine.renderBuffer(this.buffer,engine.mem.triIndexes,3,0,-1);
-		} else engine.renderIndexed(this.buffer,this.indexes);
-	}
-	,dispose: function() {
-		if(this.buffer != null) {
-			this.buffer.dispose();
-			this.buffer = null;
-		}
-		if(this.indexes != null) {
-			this.indexes.dispose();
-			this.indexes = null;
-		}
-	}
-	,__class__: h3d_prim_Primitive
-};
 var h2d_filter_Filter = function() {
 	this.boundsExtend = 0.;
 	this.autoBounds = true;
@@ -3418,15 +3595,6 @@ h3d_Buffer.prototype = {
 			this.buffer = null;
 			if(this.next != null) this.next.dispose();
 		}
-	}
-	,totalVertices: function() {
-		var count = 0;
-		var b = this;
-		while(b != null) {
-			count += b.vertices;
-			b = b.next;
-		}
-		return count;
 	}
 	,uploadVector: function(buf,bufPos,vertices) {
 		var cur = this;
@@ -4395,17 +4563,7 @@ var h3d_col_Point = function(x,y,z) {
 $hxClasses["h3d.col.Point"] = h3d_col_Point;
 h3d_col_Point.__name__ = true;
 h3d_col_Point.prototype = {
-	cross: function(p) {
-		return new h3d_col_Point(this.y * p.z - this.z * p.y,this.z * p.x - this.x * p.z,this.x * p.y - this.y * p.x);
-	}
-	,normalize: function() {
-		var k = this.x * this.x + this.y * this.y + this.z * this.z;
-		if(k < 1e-10) k = 0; else k = 1. / Math.sqrt(k);
-		this.x *= k;
-		this.y *= k;
-		this.z *= k;
-	}
-	,clone: function() {
+	clone: function() {
 		return new h3d_col_Point(this.x,this.y,this.z);
 	}
 	,__class__: h3d_col_Point
@@ -6571,6 +6729,7 @@ var h3d_scene_Mesh = function(prim,mat,parent) {
 	this.primitive = prim;
 	if(mat == null) mat = new h3d_mat_MeshMaterial(null);
 	this.material = mat;
+	this.primitive.alloc(null);
 };
 $hxClasses["h3d.scene.Mesh"] = h3d_scene_Mesh;
 h3d_scene_Mesh.__name__ = true;
@@ -7361,238 +7520,6 @@ h3d_pass_ShadowMap.prototype = $extend(h3d_pass_Default.prototype,{
 	}
 	,__class__: h3d_pass_ShadowMap
 });
-var h3d_prim_Polygon = function(points,idx) {
-	this.translatedZ = 0.;
-	this.translatedY = 0.;
-	this.translatedX = 0.;
-	this.points = points;
-	this.idx = idx;
-};
-$hxClasses["h3d.prim.Polygon"] = h3d_prim_Polygon;
-h3d_prim_Polygon.__name__ = true;
-h3d_prim_Polygon.__super__ = h3d_prim_Primitive;
-h3d_prim_Polygon.prototype = $extend(h3d_prim_Primitive.prototype,{
-	alloc: function(engine) {
-		this.dispose();
-		var size = 3;
-		if(this.normals != null) size += 3;
-		if(this.uvs != null) size += 2;
-		if(this.colors != null) size += 3;
-		var buf;
-		var this1;
-		this1 = new Array(0);
-		buf = this1;
-		var _g1 = 0;
-		var _g = this.points.length;
-		while(_g1 < _g) {
-			var k = _g1++;
-			var p = this.points[k];
-			buf.push(p.x);
-			buf.push(p.y);
-			buf.push(p.z);
-			if(this.normals != null) {
-				var n = this.normals[k];
-				buf.push(n.x);
-				buf.push(n.y);
-				buf.push(n.z);
-			}
-			if(this.uvs != null) {
-				var t = this.uvs[k];
-				buf.push(t.u);
-				buf.push(t.v);
-			}
-			if(this.colors != null) {
-				var c = this.colors[k];
-				buf.push(c.x);
-				buf.push(c.y);
-				buf.push(c.z);
-			}
-		}
-		var flags = [];
-		if(this.idx == null) flags.push(h3d_BufferFlag.Triangles);
-		if(this.normals == null) flags.push(h3d_BufferFlag.RawFormat);
-		this.buffer = h3d_Buffer.ofFloats(buf,size,flags);
-		if(this.idx != null) this.indexes = h3d_Indexes.alloc(this.idx);
-	}
-	,unindex: function() {
-		if(this.idx != null && this.points.length != this.idx.length) {
-			var p = [];
-			var used = [];
-			var _g1 = 0;
-			var _g = this.idx.length;
-			while(_g1 < _g) {
-				var i = _g1++;
-				p.push(this.points[this.idx[i]].clone());
-			}
-			if(this.normals != null) {
-				var n = [];
-				var _g11 = 0;
-				var _g2 = this.idx.length;
-				while(_g11 < _g2) {
-					var i1 = _g11++;
-					n.push(this.normals[this.idx[i1]].clone());
-				}
-				this.normals = n;
-			}
-			if(this.colors != null) {
-				var n1 = [];
-				var _g12 = 0;
-				var _g3 = this.idx.length;
-				while(_g12 < _g3) {
-					var i2 = _g12++;
-					n1.push(this.colors[this.idx[i2]].clone());
-				}
-				this.colors = n1;
-			}
-			if(this.uvs != null) {
-				var t = [];
-				var _g13 = 0;
-				var _g4 = this.idx.length;
-				while(_g13 < _g4) {
-					var i3 = _g13++;
-					t.push(this.uvs[this.idx[i3]].clone());
-				}
-				this.uvs = t;
-			}
-			this.points = p;
-			this.idx = null;
-		}
-	}
-	,translate: function(dx,dy,dz) {
-		this.translatedX += dx;
-		this.translatedY += dy;
-		this.translatedZ += dz;
-		var _g = 0;
-		var _g1 = this.points;
-		while(_g < _g1.length) {
-			var p = _g1[_g];
-			++_g;
-			p.x += dx;
-			p.y += dy;
-			p.z += dz;
-		}
-	}
-	,addNormals: function() {
-		this.normals = [];
-		var _g1 = 0;
-		var _g = this.points.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			this.normals[i] = new h3d_col_Point();
-		}
-		var pos = 0;
-		var _g11 = 0;
-		var _g2 = this.triCount();
-		while(_g11 < _g2) {
-			var i1 = _g11++;
-			var i0;
-			var i11;
-			var i2;
-			if(this.idx == null) {
-				i0 = pos++;
-				i11 = pos++;
-				i2 = pos++;
-			} else {
-				var key = pos++;
-				i0 = this.idx[key];
-				var key1 = pos++;
-				i11 = this.idx[key1];
-				var key2 = pos++;
-				i2 = this.idx[key2];
-			}
-			var p0 = this.points[i0];
-			var p1 = this.points[i11];
-			var p2 = this.points[i2];
-			var n = new h3d_col_Point(p1.x - p0.x,p1.y - p0.y,p1.z - p0.z).cross(new h3d_col_Point(p2.x - p0.x,p2.y - p0.y,p2.z - p0.z));
-			this.normals[i0].x += n.x;
-			this.normals[i0].y += n.y;
-			this.normals[i0].z += n.z;
-			this.normals[i11].x += n.x;
-			this.normals[i11].y += n.y;
-			this.normals[i11].z += n.z;
-			this.normals[i2].x += n.x;
-			this.normals[i2].y += n.y;
-			this.normals[i2].z += n.z;
-		}
-		var _g3 = 0;
-		var _g12 = this.normals;
-		while(_g3 < _g12.length) {
-			var n1 = _g12[_g3];
-			++_g3;
-			n1.normalize();
-		}
-	}
-	,triCount: function() {
-		var n = h3d_prim_Primitive.prototype.triCount.call(this);
-		if(n != 0) return n;
-		return (this.idx == null?this.points.length:this.idx.length) / 3 | 0;
-	}
-	,__class__: h3d_prim_Polygon
-});
-var h3d_prim_Cube = function(x,y,z) {
-	if(z == null) z = 1.;
-	if(y == null) y = 1.;
-	if(x == null) x = 1.;
-	this.sizeX = x;
-	this.sizeY = y;
-	this.sizeZ = z;
-	var p = [new h3d_col_Point(0,0,0),new h3d_col_Point(x,0,0),new h3d_col_Point(0,y,0),new h3d_col_Point(0,0,z),new h3d_col_Point(x,y,0),new h3d_col_Point(x,0,z),new h3d_col_Point(0,y,z),new h3d_col_Point(x,y,z)];
-	var idx;
-	var this1;
-	this1 = new Array(0);
-	idx = this1;
-	idx.push(0);
-	idx.push(1);
-	idx.push(5);
-	idx.push(0);
-	idx.push(5);
-	idx.push(3);
-	idx.push(1);
-	idx.push(4);
-	idx.push(7);
-	idx.push(1);
-	idx.push(7);
-	idx.push(5);
-	idx.push(3);
-	idx.push(5);
-	idx.push(7);
-	idx.push(3);
-	idx.push(7);
-	idx.push(6);
-	idx.push(0);
-	idx.push(6);
-	idx.push(2);
-	idx.push(0);
-	idx.push(3);
-	idx.push(6);
-	idx.push(2);
-	idx.push(7);
-	idx.push(4);
-	idx.push(2);
-	idx.push(6);
-	idx.push(7);
-	idx.push(0);
-	idx.push(4);
-	idx.push(1);
-	idx.push(0);
-	idx.push(2);
-	idx.push(4);
-	h3d_prim_Polygon.call(this,p,idx);
-};
-$hxClasses["h3d.prim.Cube"] = h3d_prim_Cube;
-h3d_prim_Cube.__name__ = true;
-h3d_prim_Cube.__super__ = h3d_prim_Polygon;
-h3d_prim_Cube.prototype = $extend(h3d_prim_Polygon.prototype,{
-	addUVs: function() {
-		this.unindex();
-		var z = new h3d_prim_UV(0,1);
-		var x = new h3d_prim_UV(1,1);
-		var y = new h3d_prim_UV(0,0);
-		var o = new h3d_prim_UV(1,0);
-		this.uvs = [z,x,o,z,o,y,x,z,y,x,y,o,x,z,y,x,y,o,z,o,x,z,y,o,x,y,z,x,o,y,z,o,x,z,y,o];
-	}
-	,__class__: h3d_prim_Cube
-});
 var h3d_prim_Plan2D = function() {
 };
 $hxClasses["h3d.prim.Plan2D"] = h3d_prim_Plan2D;
@@ -7603,10 +7530,7 @@ h3d_prim_Plan2D.get = function() {
 };
 h3d_prim_Plan2D.__super__ = h3d_prim_Primitive;
 h3d_prim_Plan2D.prototype = $extend(h3d_prim_Primitive.prototype,{
-	triCount: function() {
-		return 2;
-	}
-	,alloc: function(engine) {
+	alloc: function(engine) {
 		var v;
 		var this1;
 		this1 = new Array(0);
@@ -7660,9 +7584,6 @@ h3d_prim_RawPrimitive.prototype = $extend(h3d_prim_Primitive.prototype,{
 			this.indexes.dispose();
 			this.indexes = null;
 		}
-	}
-	,triCount: function() {
-		return this.tcount;
 	}
 	,__class__: h3d_prim_RawPrimitive
 });
