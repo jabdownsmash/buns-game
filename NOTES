@@ -1,0 +1,31 @@
+
+    //mario 64 style rubberiness, faked with individual bounce tweens
+    // var speedModifier = 10;
+    // for(var i = 0; i < this.originalGeom.length; i++)
+    // {
+    //     this.originalGeom[i].speed.x += (this.originalGeom[i].x  - this.obj.geometry.vertices[i].x)/speedModifier;
+    //     this.originalGeom[i].speed.y += (this.originalGeom[i].y  - this.obj.geometry.vertices[i].y)/speedModifier;
+    //     this.originalGeom[i].speed.z += (this.originalGeom[i].z  - this.obj.geometry.vertices[i].z)/speedModifier;
+
+    //     this.originalGeom[i].speed.x *= .9;
+    //     this.originalGeom[i].speed.y *= .9;
+    //     this.originalGeom[i].speed.z *= .9;
+
+    //     this.obj.geometry.vertices[i].x += this.originalGeom[i].speed.x;
+    //     this.obj.geometry.vertices[i].y += this.originalGeom[i].speed.y;
+    //     this.obj.geometry.vertices[i].z += this.originalGeom[i].speed.z;
+
+    //     if(Math.abs(this.obj.geometry.vertices[i].x) < Math.abs(this.originalGeom[i].x))
+    //     {
+    //         this.originalGeom[i].speed.x += (this.originalGeom[i].x - this.obj.geometry.vertices[i].x)/speedModifier;    
+    //     }
+    //     if(Math.abs(this.obj.geometry.vertices[i].y) < Math.abs(this.originalGeom[i].y))
+    //     {
+    //         this.originalGeom[i].speed.y += (this.originalGeom[i].y - this.obj.geometry.vertices[i].y)/speedModifier;    
+    //     }
+    //     if(Math.abs(this.obj.geometry.vertices[i].z) < Math.abs(this.originalGeom[i].z))
+    //     {
+    //         this.originalGeom[i].speed.z += (this.originalGeom[i].z - this.obj.geometry.vertices[i].z)/speedModifier;    
+    //     }
+
+    // }

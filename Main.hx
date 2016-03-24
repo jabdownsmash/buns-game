@@ -4,11 +4,14 @@ import h3d.col.Point;
 class Main extends hxd.App {
 
     var time : Float = 0.;
+    var pulseCounter: Float = 0;
     var obj1 : Mesh;
     var obj2 : Mesh;
     var prim : Cube;
 
     override function init() {
+
+        hxd.Timer.smoothing = false;
 
         prim = new Cube();
 
@@ -62,8 +65,17 @@ class Main extends hxd.App {
         // time is flying...
         time += 0.01 * dt;
 
-        prim.pointList[2].x += 1;
-        prim.reload();
+        pulseCounter += dt;
+        if(pulseCounter > 1)
+        {
+            prim.runFilter(function(op:Point,p:Point)
+                {
+                    var np = p.clone();
+                    np.setLength(Math.random() + 1);
+                    return np;
+                });
+            pulseCounter -= 1;
+        }
 
         // move the camera position around the two cubes
         var dist = 5;
