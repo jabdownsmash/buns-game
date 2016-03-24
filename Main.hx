@@ -63,7 +63,7 @@ class Main extends hxd.App {
     override function update( dt : Float ) {
 
         // time is flying...
-        time += 0.01 * dt;
+        time += dt;
 
         pulseCounter += dt;
         if(pulseCounter > 1)
