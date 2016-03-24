@@ -47,6 +47,13 @@ class Cube extends CustomPolygon {
             x, z,
         ];
 
+        _originalUvs = [];
+
+        for( uv in uvs )
+        {
+            _originalUvs.push(uv);
+        }
+
 
         // var r = new Point(1,0,0);
         // var g = new Point(0,1,0);

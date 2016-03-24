@@ -5,6 +5,7 @@ import h3d.prim.*;
 class CustomPolygon extends Polygon {
 
     public var _originalPointList : Array<Point>;
+    public var _originalUvs : Array<UV>;
 
     public var originalPointFilter : Point -> Point = null;
     public var transformFilter : Point->Point -> Point = null;
@@ -77,12 +78,12 @@ class CustomPolygon extends Polygon {
                 }
                 colors = n;
             }
-            if( uvs != null )
+            if( _originalUvs != null )
             {
                 var t = [];
                 for( i in 0...idList.length )
                 {
-                    t.push(uvs[idList[i]].clone());
+                    t.push(_originalUvs[idList[i]].clone());
                 }
                 uvs = t;
             }
