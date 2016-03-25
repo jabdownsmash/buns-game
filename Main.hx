@@ -1,5 +1,8 @@
 import h3d.scene.*;
 import h3d.col.Point;
+import tweenx909.TweenX;
+import tweenx909.EaseX;
+import tweenx909.advanced.UpdateModeX;
 
 class Main extends hxd.App {
 
@@ -10,9 +13,8 @@ class Main extends hxd.App {
     var prim : Cube;
 
     override function init() {
-
-        hxd.Timer.smoothing = false;
-
+        motion.actuators.SimpleActuator.stage_onEnterFrame();
+        TweenX.updateMode = UpdateModeX.MANUAL;
         prim = new Cube();
 
         // translate it so its center will be at the center of the cube
@@ -61,28 +63,43 @@ class Main extends hxd.App {
     }
 
     override function update( dt : Float ) {
-
+        // motion.actuators.SimpleActuator.stage_onEnterFrame();
+        TweenX.manualUpdate( 1/60);
         // time is flying...
-        time += dt;
+        time += .01*dt;
 
         pulseCounter += dt;
-        if(pulseCounter > 1)
+
+        var kek = new Point();
+        if(pulseCounter > 3)
         {
             prim.runFilter(function(op:Point,p:Point)
                 {
-                    var np = p.clone();
-                    np.setLength(Math.random() + 1);
-                    return np;
+                    // var np = p.clone();
+                    p.setLength(Math.random()*2 + 1);
+                    // return np;
+                    kek = p;
+
+                    // Actuate.tween(p,10,{x:op.x,y:op.y,z:op.z});
+                    // TweenX.to( p, {x:op.x,y:op.y,z:op.z} ).time( 1.2 ).ease( EaseX.expoInOut ); 
+                    // TweenX.to( p, {x:15,y:10,z:8} ).time( 1.2 ).ease( EaseX.expoInOut ); 
+                    return null;
                 });
-            pulseCounter -= 1;
+            prim.applyTween(function(np,op)
+                {
+                    return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( .4 ).ease( EaseX.expoOut );
+                });
+            pulseCounter -= 3;
         }
+
+        prim.update();
 
         // move the camera position around the two cubes
         var dist = 5;
         s3d.camera.pos.set(Math.cos(time) * dist, Math.sin(time) * dist, dist * 0.7 * Math.sin(time));
 
         // rotate the second cube along a given axis + angle
-        obj2.setRotateAxis(-0.5, 2, Math.cos(time), time + Math.PI / 2);
+        // obj2.setRotateAxis(-0.5, 2, Math.cos(time), time + Math.PI / 2);
     }
 
     static function main() {

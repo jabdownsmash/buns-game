@@ -2,7 +2,9 @@
 -main Main
 -lib heaps
 -lib actuate
+-lib tweenx
 -D resourcesPath=res
 -D source-map-content
+-D actuate-manual-update
 -dce full
 --macro include('h3d')

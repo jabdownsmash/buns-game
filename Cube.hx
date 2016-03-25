@@ -47,11 +47,11 @@ class Cube extends CustomPolygon {
             x, z,
         ];
 
-        _originalUvs = [];
+        originalUvs = [];
 
         for( uv in uvs )
         {
-            _originalUvs.push(uv);
+            originalUvs.push(uv);
         }
 
 
