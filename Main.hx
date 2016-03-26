@@ -3,6 +3,8 @@ import h3d.col.Point;
 import tweenx909.TweenX;
 import tweenx909.EaseX;
 import tweenx909.advanced.UpdateModeX;
+import hxd.Event;
+import hxd.Key;
 
 class Main extends hxd.App {
 
@@ -18,7 +20,8 @@ class Main extends hxd.App {
         prim = new Cube();
 
         // translate it so its center will be at the center of the cube
-        prim.translate( -0.5, -0.5, -0.5);
+        // prim.translate( -0.5, -0.5, -0.5);
+        prim.x += 1;
 
         // unindex the faces to create hard edges normals
         // prim.unindex();
@@ -60,40 +63,56 @@ class Main extends hxd.App {
         // activate lights on boss cubes
         obj1.material.mainPass.enableLights = true;
         obj2.material.mainPass.enableLights = true;
+
+
+        s2d.addEventListener(handleKeys);
+    }
+
+    function handleKeys(e)
+    {
+        if(e.kind == EKeyDown)
+        {
+            if(e.keyCode == Key.LEFT)
+            {
+                prim.z += .1;
+            }
+            if(e.keyCode == Key.RIGHT)
+            {
+                prim.z -= .1;
+            }
+        }
     }
 
     override function update( dt : Float ) {
         // motion.actuators.SimpleActuator.stage_onEnterFrame();
-        TweenX.manualUpdate( 1/60);
+        TweenX.manualUpdate( dt);
         // time is flying...
         time += .01*dt;
 
         pulseCounter += dt;
 
         var kek = new Point();
-        if(pulseCounter > 3)
+        if(pulseCounter > 150)
         {
             prim.runFilter(function(op:Point,p:Point)
                 {
-                    // var np = p.clone();
                     p.setLength(Math.random()*2 + 1);
-                    // return np;
                     kek = p;
 
-                    // Actuate.tween(p,10,{x:op.x,y:op.y,z:op.z});
-                    // TweenX.to( p, {x:op.x,y:op.y,z:op.z} ).time( 1.2 ).ease( EaseX.expoInOut ); 
-                    // TweenX.to( p, {x:15,y:10,z:8} ).time( 1.2 ).ease( EaseX.expoInOut ); 
                     return null;
                 });
             prim.applyTween(function(np,op)
                 {
-                    return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( .4 ).ease( EaseX.expoOut );
+                    return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 10 ).ease( EaseX.bounceOut );
                 });
-            pulseCounter -= 3;
+            pulseCounter -= 150;
         }
 
-        prim.update();
+        prim.x += .01 * dt;
+        prim.z += .01 * dt;
+        prim.needsUpdate = true;
 
+        prim.update();
         // move the camera position around the two cubes
         var dist = 5;
         s3d.camera.pos.set(Math.cos(time) * dist, Math.sin(time) * dist, dist * 0.7 * Math.sin(time));

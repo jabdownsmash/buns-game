@@ -7,14 +7,14 @@ class Cube extends CustomPolygon {
     public function new( x = 1., y = 1., z = 1.)
     {
         var p = [
-            new Point(0, 0, 0),
-            new Point(x, 0, 0),
-            new Point(0, y, 0),
-            new Point(0, 0, z),
-            new Point(x, y, 0),
-            new Point(x, 0, z),
-            new Point(0, y, z),
-            new Point(x, y, z),
+            new Point(-x/2, -y/2, -z/2),
+            new Point( x/2, -y/2, -z/2),
+            new Point(-x/2,  y/2, -z/2),
+            new Point(-x/2, -y/2,  z/2),
+            new Point( x/2,  y/2, -z/2),
+            new Point( x/2, -y/2,  z/2),
+            new Point(-x/2,  y/2,  z/2),
+            new Point( x/2,  y/2,  z/2),
         ];
         var idx = new hxd.IndexBuffer();
         idx.push(0); idx.push(1); idx.push(5);

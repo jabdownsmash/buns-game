@@ -3,6 +3,7 @@
 -lib heaps
 -lib actuate
 -lib tweenx
+-D window=800x400
 -D resourcesPath=res
 -D source-map-content
 -D actuate-manual-update

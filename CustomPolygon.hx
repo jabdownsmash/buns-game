@@ -20,6 +20,12 @@ class CustomPolygon extends Polygon {
     public var originalPointList : Array<Point>;
     public var originalUvs : Array<UV>;
 
+    public var x:Float = 0;
+    public var y:Float = 0;
+    public var z:Float = 0;
+
+    public var needsUpdate:Bool = false;
+
     public function new( p:Array<Point>, idx:hxd.IndexBuffer)
     {
         pointList = p;
@@ -41,8 +47,6 @@ class CustomPolygon extends Polygon {
             var np = pointList[i].clone();
             tweenPoints.push(np);
             tweenApplicator(np,originalPointList[i]);
-            // .addEventListener( EventX.FINISH,finish);
-            // Actuate.tween(np, 1, {x:100}); 
         }
         tweening = true;
     }
@@ -66,7 +70,7 @@ class CustomPolygon extends Polygon {
             if(p != null)
                 pointList[i].set(p.x,p.y,p.z);
         }
-        reload();
+        needsUpdate = true;
     }
 
     private function setPoints(ps:Array<Point>)
@@ -78,7 +82,7 @@ class CustomPolygon extends Polygon {
         }
     }
 
-    public function reload()
+    private function reload()
     {
         if( idList != null && pointList.length != idList.length )
         {
@@ -86,7 +90,11 @@ class CustomPolygon extends Polygon {
             var used = [];
             for( i in 0...idList.length )
             {
-                p.push(pointList[idList[i]].clone());
+                var point = pointList[idList[i]].clone();
+                point.x += x;
+                point.y += y;
+                point.z += z;
+                p.push(point);
             }
             if( normals != null )
             {
@@ -117,8 +125,8 @@ class CustomPolygon extends Polygon {
             }
             points = p;
             idx = null;
-            alloc(null);
         }
+        dispose();
     }
 
     public function update()
@@ -133,8 +141,11 @@ class CustomPolygon extends Polygon {
             {
                 var op = tweenPoints[i];
                 pointList[i].set(op.x,op.y,op.z);
-                if(i == 0)trace(op.x);
             }
+            needsUpdate = true;
+        }
+        if(needsUpdate)
+        {
             reload();
         }
     }
