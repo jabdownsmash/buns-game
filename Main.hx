@@ -13,25 +13,16 @@ class Main extends hxd.App {
     var obj1 : Mesh;
     var obj2 : Mesh;
     var prim:Kite;
+    var prim2:Cube;
+    var light:h3d.scene.DirLight;
 
     override function init() {
         motion.actuators.SimpleActuator.stage_onEnterFrame();
         TweenX.updateMode = UpdateModeX.MANUAL;
         prim = new Kite(.6,2,1,.9);
-        // prim = new Cube();
+        prim2 = new Cube();
 
-        // translate it so its center will be at the center of the cube
-        // prim.translate( -0.5, -0.5, -0.5);
-        prim.x += 1;
-
-        // unindex the faces to create hard edges normals
-        prim.unindex();
-
-        // add face normals
-        prim.addNormals();
-
-        // add texture coordinates
-        prim.addUVs();
+        // prim.x += 1;
 
         // accesss the logo resource and convert it to a texture
         var tex = hxd.Res.hxlogo.toTexture();
@@ -43,7 +34,7 @@ class Main extends hxd.App {
         obj1 = new Mesh(prim, mat, s3d);
 
         // creates another cube, this time with no texture
-        obj2 = new Mesh(prim, new h3d.mat.MeshMaterial(), s3d);
+        obj2 = new Mesh(prim2, new h3d.mat.MeshMaterial(), s3d);
 
         // set the second cube color
         obj2.material.color.setColor(0xFFB280);
@@ -55,8 +46,8 @@ class Main extends hxd.App {
         obj2.scale(0.6);
 
         // adds a directional light to the scene
-        var light = new h3d.scene.DirLight(new h3d.Vector(0.5, 0.5, -0.5), s3d);
-        light.enableSpecular = true;
+        light = new h3d.scene.DirLight(new h3d.Vector(0.6, 0.5, -0.5), s3d);
+        // light.enableSpecular = true;
 
         // set the ambient light to 30%
         s3d.lightSystem.ambientLight.set(0.3, 0.3, 0.3);
@@ -75,11 +66,11 @@ class Main extends hxd.App {
         {
             if(e.keyCode == Key.LEFT)
             {
-                prim.z += .1;
+                light.z += .1;
             }
             if(e.keyCode == Key.RIGHT)
             {
-                prim.z -= .1;
+                light.z -= .1;
             }
         }
     }
@@ -106,14 +97,27 @@ class Main extends hxd.App {
                 {
                     return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 10 ).ease( EaseX.bounceOut );
                 });
+            prim2.runFilter(function(op:Point,p:Point)
+                {
+                    p.setLength(Math.random()*2 + 1);
+                    kek = p;
+
+                    return null;
+                });
+            prim2.applyTween(function(np,op)
+                {
+                    return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 10 ).ease( EaseX.bounceOut );
+                });
             pulseCounter -= 150;
         }
 
         // prim.x += .01 * dt;
         // prim.z += .01 * dt;
         prim.needsUpdate = true;
+        prim2.needsUpdate = true;
 
         prim.update();
+        prim2.update();
         // move the camera position around the two cubes
         var dist = 5;
         s3d.camera.pos.set(Math.cos(time) * dist, Math.sin(time) * dist, dist * 0.7 * Math.sin(time));

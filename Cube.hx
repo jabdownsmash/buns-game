@@ -51,7 +51,7 @@ class Cube extends CustomPolygon {
 
         for( uv in uvs )
         {
-            originalUvs.push(uv);
+            originalUvs.push(uv.clone());
         }
 
 

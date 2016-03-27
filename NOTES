@@ -29,3 +29,25 @@
     //     }
 
     // }
+
+
+
+
+    
+            // if( normals != null )
+            // {
+            //     if(originalNormals == null)
+            //     {
+            //         originalNormals = [];
+            //         for(normal in normals)
+            //         {
+            //             originalNormals.push(normal.clone());
+            //         }
+            //     }
+            //     var n = [];
+            //     for( i in 0...idList.length )
+            //     {
+            //         n.push(originalNormals[idList[i]].clone());
+            //     }
+            //     normals = n;
+            // }

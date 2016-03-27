@@ -17,8 +17,10 @@ class CustomPolygon extends Polygon {
 
     public var tweening : Bool = false;
     public var tweenPoints : Array<Point>;
+
     public var originalPointList : Array<Point>;
     public var originalUvs : Array<UV>;
+    public var originalNormals : Array<Point>;
 
     public var x:Float = 0;
     public var y:Float = 0;
@@ -37,6 +39,18 @@ class CustomPolygon extends Polygon {
         idList = idx;
 
         super(p, idx);
+
+        // unindex the faces to create hard edges normals
+        // unindex();
+        reload();
+
+        // add face normals
+        addNormals();
+
+        // add texture coordinates
+        addUVs();
+        
+        reload();
     }
 
     public function applyTween(tweenApplicator:Point->Point->tweenx909.advanced.StandardTweenX<Point>)
@@ -95,15 +109,6 @@ class CustomPolygon extends Polygon {
                 point.y += y;
                 point.z += z;
                 p.push(point);
-            }
-            if( normals != null )
-            {
-                var n = [];
-                for( i in 0...idList.length )
-                {
-                    n.push(normals[idList[i]].clone());
-                }
-                normals = n;
             }
             if( colors != null )
             {

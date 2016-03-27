@@ -16,24 +16,16 @@ class Kite extends CustomPolygon {
         ];
         var idx = new hxd.IndexBuffer();
         idx.push(0); idx.push(1); idx.push(3);
-        idx.push(0); idx.push(2); idx.push(3);
-        idx.push(0); idx.push(1); idx.push(4);
+        idx.push(0); idx.push(3); idx.push(2);
+        idx.push(0); idx.push(4); idx.push(1);
         idx.push(0); idx.push(2); idx.push(4);
-        idx.push(5); idx.push(1); idx.push(3);
+
+        idx.push(5); idx.push(3); idx.push(1);
         idx.push(5); idx.push(2); idx.push(3);
         idx.push(5); idx.push(1); idx.push(4);
-        idx.push(5); idx.push(2); idx.push(4);
+        idx.push(5); idx.push(4); idx.push(2);
 
         super(p, idx);
-
-        normals = [
-            new Point( 0,  -1,      0),
-            new Point( 1, 0, 0),
-            new Point(-1, 0, 0),
-            new Point( 0,   0, 1),
-            new Point( 0,   0, -1),
-            new Point( 0,   1,      0),
-        ];
     }
 
     override function addUVs() {
@@ -47,7 +39,6 @@ class Kite extends CustomPolygon {
         uvs = [
             z, x, o,
             z, o, y,
-            x, z,
         ];
 
         originalUvs = [];
