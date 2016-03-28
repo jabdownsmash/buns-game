@@ -21,8 +21,6 @@ class CustomPolygon extends Polygon {
     public var tweenPoints : Array<Point>;
 
     public var originalPointList : Array<Point>;
-    public var originalUvs : Array<UV>;
-    public var originalNormals : Array<Point>;
 
     public var x:Float = 0;
     public var y:Float = 0;
@@ -117,15 +115,6 @@ class CustomPolygon extends Polygon {
                     n.push(colors[idList[i]].clone());
                 }
                 colors = n;
-            }
-            if( originalUvs != null )
-            {
-                var t = [];
-                for( i in 0...idList.length )
-                {
-                    t.push(originalUvs[idList[i]].clone());
-                }
-                uvs = t;
             }
             points = p;
             idx = null;
