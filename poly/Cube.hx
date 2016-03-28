@@ -1,4 +1,6 @@
 
+package poly;
+
 import h3d.col.Point;
 import h3d.prim.UV;
 
@@ -53,13 +55,5 @@ class Cube extends CustomPolygon {
         {
             originalUvs.push(uv.clone());
         }
-
-
-        // var r = new Point(1,0,0);
-        // var g = new Point(0,1,0);
-        // var b = new Point(0,0,1);
-        // var x = new Point(1,1,1);
-
-        // colors = [r,g,b,x,r,g,b,x];
     }
 }

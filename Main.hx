@@ -5,6 +5,7 @@ import tweenx909.EaseX;
 import tweenx909.advanced.UpdateModeX;
 import hxd.Event;
 import hxd.Key;
+import poly.*;
 
 class Main extends hxd.App {
 
@@ -13,14 +14,14 @@ class Main extends hxd.App {
     var obj1 : Mesh;
     var obj2 : Mesh;
     var prim:Kite;
-    var prim2:Cube;
+    var prim2:Sphere;
     var light:h3d.scene.DirLight;
 
     override function init() {
         motion.actuators.SimpleActuator.stage_onEnterFrame();
         TweenX.updateMode = UpdateModeX.MANUAL;
-        prim = new Kite(.6,2,1,.9);
-        prim2 = new Cube();
+        prim = new Kite(.6,2,1,.7);
+        prim2 = new Sphere();
 
         // prim.x += 1;
 
@@ -28,7 +29,8 @@ class Main extends hxd.App {
         var tex = hxd.Res.hxlogo.toTexture();
 
         // create a material with this texture
-        var mat = new h3d.mat.MeshMaterial(tex);
+        var mat = new h3d.mat.MeshMaterial();
+        // var mat = new h3d.mat.MeshMaterial(tex);
 
         // our first cube mesh on the 3D scene with our created material
         obj1 = new Mesh(prim, mat, s3d);
@@ -37,6 +39,7 @@ class Main extends hxd.App {
         obj2 = new Mesh(prim2, new h3d.mat.MeshMaterial(), s3d);
 
         // set the second cube color
+        obj1.material.color.setColor(0xFFB280);
         obj2.material.color.setColor(0xFFB280);
 
         // put it above the first cube
@@ -66,11 +69,11 @@ class Main extends hxd.App {
         {
             if(e.keyCode == Key.LEFT)
             {
-                light.z += .1;
+                light.direction.x += 1;
             }
             if(e.keyCode == Key.RIGHT)
             {
-                light.z -= .1;
+                light.direction.x -= 1;
             }
         }
     }
@@ -108,6 +111,7 @@ class Main extends hxd.App {
                 {
                     return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 10 ).ease( EaseX.bounceOut );
                 });
+            obj2.material.color.setColor(Math.floor(Math.random()*0xFFFFFF));
             pulseCounter -= 150;
         }
 
