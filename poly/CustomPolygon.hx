@@ -27,8 +27,9 @@ class CustomPolygon extends Polygon {
     public var z:Float = 0;
 
     public var needsUpdate:Bool = false;
+    public var faceNormals:Bool = true;
 
-    public function new( p:Array<Point>, idx:hxd.IndexBuffer)
+    public function new( p:Array<Point>, idx:hxd.IndexBuffer,fn = true)
     {
         pointList = p;
         originalPointList = [];
@@ -45,7 +46,15 @@ class CustomPolygon extends Polygon {
         reload();
 
         // add face normals
-        addNormals();
+        if(fn)
+        {
+            addNormals();
+        }
+        else
+        {
+            addVertexNormals();
+        }
+        faceNormals = fn;
         
         reload();
     }
@@ -95,31 +104,41 @@ class CustomPolygon extends Polygon {
 
     private function reload()
     {
-        if( idList != null && pointList.length != idList.length )
+        if(faceNormals)
         {
-            var p = [];
-            var used = [];
-            for( i in 0...idList.length )
+            if( idList != null && pointList.length != idList.length )
             {
-                var point = pointList[idList[i]].clone();
-                point.x += x;
-                point.y += y;
-                point.z += z;
-                p.push(point);
-            }
-            if( colors != null )
-            {
-                var n = [];
+                var p = [];
+                var used = [];
                 for( i in 0...idList.length )
                 {
-                    n.push(colors[idList[i]].clone());
+                    var point = pointList[idList[i]].clone();
+                    point.x += x;
+                    point.y += y;
+                    point.z += z;
+                    p.push(point);
                 }
-                colors = n;
+                points = p;
+                idx = null;
             }
-            points = p;
-            idx = null;
+        }
+        else
+        {
+            points = pointList;
+            idx = idList;
         }
         dispose();
+    }
+
+    public function addVertexNormals()
+    {
+        normals = [];
+        for(point in pointList)
+        {
+            var p = point.clone();
+            p.normalize();
+            normals.push(p);
+        }
     }
 
     public function update()

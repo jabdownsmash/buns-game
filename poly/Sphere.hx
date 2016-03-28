@@ -63,7 +63,7 @@ class Sphere extends CustomPolygon {
         var p2 = longs*layers - 1;
         idx.push(p1); idx.push(p2); idx.push(longs*layers + 1);
 
-        super(p, idx);
+        super(p, idx,false);
     }
 
     private function getSliceY(i:Int,layers:Int,y:Float)
