@@ -6,7 +6,7 @@ import h3d.prim.UV;
 
 class Kite extends CustomPolygon {
 
-    public function new( x = 1., y = 1., z = 1., my = .5)
+    public function new( x = 1., y = 1., z = 1., my = .5, fn = false)
     {
         var p = [
             new Point( 0,  -y/2,      0),
@@ -27,6 +27,6 @@ class Kite extends CustomPolygon {
         idx.push(5); idx.push(1); idx.push(4);
         idx.push(5); idx.push(4); idx.push(2);
 
-        super(p, idx);
+        super(p, idx, fn);
     }
 }

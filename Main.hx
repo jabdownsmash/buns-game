@@ -20,7 +20,7 @@ class Main extends hxd.App {
     override function init() {
         motion.actuators.SimpleActuator.stage_onEnterFrame();
         TweenX.updateMode = UpdateModeX.MANUAL;
-        prim = new Kite(.6,2,1,.7);
+        prim = new Kite(.6,2,1,.7, false);
         prim2 = new Sphere(.6,2,1);
 
         // prim.x += 1;

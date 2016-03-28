@@ -6,7 +6,7 @@ import h3d.prim.UV;
 
 class Cube extends CustomPolygon {
 
-    public function new( x = 1., y = 1., z = 1.)
+    public function new( x = 1., y = 1., z = 1.,fn = false)
     {
         var p = [
             new Point(-x/2, -y/2, -z/2),
@@ -32,6 +32,6 @@ class Cube extends CustomPolygon {
         idx.push(0); idx.push(4); idx.push(1);
         idx.push(0); idx.push(2); idx.push(4);
 
-        super(p, idx);
+        super(p, idx,fn);
     }
 }

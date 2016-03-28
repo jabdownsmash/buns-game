@@ -6,7 +6,7 @@ import h3d.prim.UV;
 
 class Sphere extends CustomPolygon {
 
-    public function new( x = 1., y = 1., z = 1., layers = 5, longs = 10)
+    public function new( x = 1., y = 1., z = 1., fn = false, layers = 5, longs = 10)
     {
         var p = [];
         var idx = new hxd.IndexBuffer();
@@ -63,7 +63,7 @@ class Sphere extends CustomPolygon {
         var p2 = longs*layers - 1;
         idx.push(p1); idx.push(p2); idx.push(longs*layers + 1);
 
-        super(p, idx,false);
+        super(p, idx, fn);
     }
 
     private function getSliceY(i:Int,layers:Int,y:Float)
