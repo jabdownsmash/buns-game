@@ -84,7 +84,7 @@ class Sphere extends CustomPolygon {
 
     private function sliceFirstPoint(x:Float,r:Float,py:Float)
     {
-        return new Point(x*r,py,0);
+        return new Point(x/2*r,py,0);
     }
 
     private function slicePoint(x:Float,z:Float,r:Float,py:Float,j:Int,longs:Int)
@@ -92,28 +92,6 @@ class Sphere extends CustomPolygon {
         var angle = j/longs * Math.PI * 2;
         var px = Math.cos(angle);
         var pz = Math.sin(angle);
-        return new Point(px*x*r,py,pz*z*r);
-    }
-
-    override function addUVs() {
-        // unindex();
-
-        // var z = new UV(0, 1);
-        // var x = new UV(1, 1);
-        // var y = new UV(0, 0);
-        // var o = new UV(1, 0);
-
-        // uvs = [
-        //     z, x, o,
-        //     z, o, y,
-        //     x, z,
-        // ];
-
-        // originalUvs = [];
-
-        // for( uv in uvs )
-        // {
-        //     originalUvs.push(uv.clone());
-        // }
+        return new Point(px*x/2*r,py,pz*z/2*r);
     }
 }

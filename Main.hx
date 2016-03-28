@@ -21,7 +21,7 @@ class Main extends hxd.App {
         motion.actuators.SimpleActuator.stage_onEnterFrame();
         TweenX.updateMode = UpdateModeX.MANUAL;
         prim = new Kite(.6,2,1,.7);
-        prim2 = new Sphere();
+        prim2 = new Sphere(.6,2,1);
 
         // prim.x += 1;
 
@@ -43,10 +43,10 @@ class Main extends hxd.App {
         obj2.material.color.setColor(0xFFB280);
 
         // put it above the first cube
-        obj2.z = 0.7;
+        obj2.x = 2;
 
         // scale it down to 60%
-        obj2.scale(0.6);
+        // obj2.scale(0.6);
 
         // adds a directional light to the scene
         light = new h3d.scene.DirLight(new h3d.Vector(0.6, 0.5, -0.5), s3d);
