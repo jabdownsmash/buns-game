@@ -43,7 +43,7 @@ class Main extends hxd.App {
         obj2.material.color.setColor(0xFFB280);
 
         // put it above the first cube
-        obj2.x = 2;
+        obj2.x = 1;
 
         // scale it down to 60%
         // obj2.scale(0.6);

@@ -34,26 +34,4 @@ class Cube extends CustomPolygon {
 
         super(p, idx);
     }
-
-    override function addUVs() {
-        // unindex();
-
-        var z = new UV(0, 1);
-        var x = new UV(1, 1);
-        var y = new UV(0, 0);
-        var o = new UV(1, 0);
-
-        uvs = [
-            z, x, o,
-            z, o, y,
-            x, z,
-        ];
-
-        originalUvs = [];
-
-        for( uv in uvs )
-        {
-            originalUvs.push(uv.clone());
-        }
-    }
 }

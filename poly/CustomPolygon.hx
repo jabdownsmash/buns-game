@@ -48,9 +48,6 @@ class CustomPolygon extends Polygon {
 
         // add face normals
         addNormals();
-
-        // add texture coordinates
-        addUVs();
         
         reload();
     }
