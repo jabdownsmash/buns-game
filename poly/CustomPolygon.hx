@@ -78,7 +78,7 @@ class CustomPolygon extends Polygon {
 
     public function runFilter( filter:Point->Point -> Point)
     {
-        tweening = false;
+        // tweening = false;
         for(i in 0...pointList.length)
         {
             var op = originalPointList[i];

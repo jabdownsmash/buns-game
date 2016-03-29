@@ -13,21 +13,21 @@ class Sphere extends CustomPolygon {
 
         var py = getSliceY(0,layers,y);
         var r = getSliceRadius(y,py);
-        p.push(sliceFirstPoint(x,r,py));
+        p.push(sliceFirstPoint(x,y,r,py));
 
         for(j in 1...longs)
         {
-            p.push(slicePoint(x,z,r,py,j,longs));
+            p.push(slicePoint(x,y,z,r,py,j,longs));
         }
 
         for(i in 1...layers)
         {
             var py = getSliceY(i,layers,y);
             var r = getSliceRadius(y,py);
-            p.push(sliceFirstPoint(x,r,py));
+            p.push(sliceFirstPoint(x,y,r,py));
             for(j in 1...longs)
             {
-                p.push(slicePoint(x,z,r,py,j,longs));
+                p.push(slicePoint(x,y,z,r,py,j,longs));
 
                 var p1 = i * longs + j;
                 var p2 = i * longs + j - 1;
@@ -82,16 +82,16 @@ class Sphere extends CustomPolygon {
         return py * Math.sqrt(1 - t*t)/t;
     }
 
-    private function sliceFirstPoint(x:Float,r:Float,py:Float)
+    private function sliceFirstPoint(x:Float,y:Float,r:Float,py:Float)
     {
-        return new Point(x/2*r,py,0);
+        return new Point(x/2/(y/2)*r,py,0);
     }
 
-    private function slicePoint(x:Float,z:Float,r:Float,py:Float,j:Int,longs:Int)
+    private function slicePoint(x:Float,y:Float,z:Float,r:Float,py:Float,j:Int,longs:Int)
     {
         var angle = j/longs * Math.PI * 2;
         var px = Math.cos(angle);
         var pz = Math.sin(angle);
-        return new Point(px*x/2*r,py,pz*z/2*r);
+        return new Point(px/(y/2)*x/2*r,py,pz/(y/2)*z/2*r);
     }
 }
