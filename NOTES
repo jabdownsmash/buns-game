@@ -51,3 +51,53 @@
             //     }
             //     normals = n;
             // }
+
+
+
+            
+        pulseCounter += dt;
+
+        if(pulseCounter > 150000)
+        {
+            // prim.runFilter(function(op:Point,p:Point)
+            //     {
+            //         p.setLength(Math.random()*2 + 1);
+            //         kek = p;
+
+            //         return null;
+            //     });
+            // prim.applyTween(function(np,op)
+            //     {
+            //         return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 100 ).ease( EaseX.bounceOut );
+            //     });
+            // prim2.runFilter(function(op:Point,p:Point)
+            //     {
+            //         p.setLength(Math.random()*2 + 1);
+            //         kek = p;
+
+            //         return null;
+            //     });
+            // prim2.applyTween(function(np,op)
+            //     {
+            //         return TweenX.to( np, {x:op.x,y:op.y,z:op.z} ).time( 10 ).ease( EaseX.bounceOut );
+            //     });
+            // obj2.material.color.setColor(Math.floor(Math.random()*0xFFFFFF));
+            // pulseCounter -= 150;
+        }
+
+        // prim.runFilter(function(op:Point,p:Point)
+        //     {
+        //         p.x = p.x - p.x%.2;
+        //         p.y = p.y - p.y%.2;
+        //         p.z = p.z - p.z%.2;
+        //         trace(p.y);
+
+        //         return null;
+        //     });
+        // prim.x += .01 * dt;
+        // prim.z += .01 * dt;
+        // prim.needsUpdate = true;
+        // prim2.needsUpdate = true;
+
+        // prim.update();
+        // prim2.update();
