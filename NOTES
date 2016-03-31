@@ -104,6 +104,22 @@
 
 
 
-        
+
         // rotate the second cube along a given axis + angle
         // obj2.setRotateAxis(-0.5, 2, Math.cos(time), time + Math.PI / 2);
+
+
+
+
+        
+        // if(e.kind == EKeyDown)
+        // {
+        //     if(e.keyCode == Key.LEFT)
+        //     {
+        //         obj1.x += 1;
+        //     }
+        //     if(e.keyCode == Key.RIGHT)
+        //     {
+        //         obj1.x -= 1;
+        //     }
+        // }

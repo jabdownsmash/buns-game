@@ -2,6 +2,7 @@
 import engine.Engine;
 
 class Main extends Engine {
+    
     var scene:engine.GameScene;
 
     static function main()
@@ -11,10 +12,7 @@ class Main extends Engine {
         hxd.Res.initEmbed();
 
         // start the application
-        // var eng = new Engine();
-        var mn = new Main();
-
-        // mn.mInit();
+        new Main();
     }
 
     override function init()
@@ -22,7 +20,6 @@ class Main extends Engine {
         super.init();
 
         scene = new assets.scenes.Test(s3d);
-
         scene.init();
     }
 

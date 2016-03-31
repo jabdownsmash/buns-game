@@ -3,11 +3,6 @@ package engine.poly;
 
 import h3d.col.Point;
 import h3d.prim.*;
-// import tweenx909.TweenX;
-// import tweenx909.EaseX;
-import tweenx909.EventX;
-// import tweenx909.advanced.UpdateModeX;
-// import motion.Actuate;
 
 class CustomPolygon extends Polygon {
 

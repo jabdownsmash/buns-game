@@ -4,7 +4,6 @@ package engine;
 import h3d.scene.*;
 import h3d.col.Point;
 import tweenx909.TweenX;
-import tweenx909.EaseX;
 import tweenx909.advanced.UpdateModeX;
 import hxd.Event;
 import hxd.Key;
@@ -30,17 +29,6 @@ class Engine extends hxd.App {
 
     function handleKeys(e)
     {
-        // if(e.kind == EKeyDown)
-        // {
-        //     if(e.keyCode == Key.LEFT)
-        //     {
-        //         obj1.x += 1;
-        //     }
-        //     if(e.keyCode == Key.RIGHT)
-        //     {
-        //         obj1.x -= 1;
-        //     }
-        // }
     }
 
     override function update( dt : Float ) {

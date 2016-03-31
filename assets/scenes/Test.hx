@@ -1,5 +1,6 @@
 
 package assets.scenes;
+
 import engine.GameScene;
 import assets.objects.Sword;
 
@@ -12,7 +13,7 @@ class Test extends GameScene {
     }
 
     override function update( dt : Float ) {
-        
+
         time += .01*dt;
 
         var dist = 5;
