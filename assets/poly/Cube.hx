@@ -7,9 +7,11 @@ import h3d.scene.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
-class Cube extends CustomPolygon {
+import engine.objects.*;
 
-    public function new( parent:Object, x = 1., y = 1., z = 1.,fn = false)
+class Cube extends CustomMesh {
+
+    public function new( parent:GameObject, x = 1., y = 1., z = 1.,fn = false)
     {
         var p = [
             new Point(-x/2, -y/2, -z/2),

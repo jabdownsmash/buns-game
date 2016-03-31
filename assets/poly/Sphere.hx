@@ -7,9 +7,11 @@ import h3d.scene.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
-class Sphere extends CustomPolygon {
+import engine.objects.*;
 
-    public function new( parent:Object, x = 1., y = 1., z = 1., fn = false, layers = 5, longs = 10)
+class Sphere extends CustomMesh {
+
+    public function new( parent:GameObject, x = 1., y = 1., z = 1., fn = false, layers = 5, longs = 10)
     {
         var p = [];
         var idx = new hxd.IndexBuffer();

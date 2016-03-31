@@ -7,9 +7,11 @@ import h3d.scene.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
-class Kite extends CustomPolygon {
+import engine.objects.*;
 
-    public function new( parent:Object, x = 1., y = 1., z = 1., my = .5, fn = false)
+class Kite extends CustomMesh {
+
+    public function new( parent:GameObject, x = 1., y = 1., z = 1., my = .5, fn = false)
     {
         var p = [
             new Point( 0,  -y/2,      0),
