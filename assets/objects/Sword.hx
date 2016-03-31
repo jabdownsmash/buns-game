@@ -25,42 +25,20 @@ class Sword extends GameObject {
     {
         super(s3d);
 
-        prim = new Kite(.2,1,.1,.2, true);
-        prim2 = new Sphere(.15,.15,.15);
-        prim3 = new Cube(.06,.25,.06);
-        prim4 = new Cube(.34,.1,.1);
-
-        // prim.x += 1;
-
-        // accesss the logo resource and convert it to a texture
-        var tex = hxd.Res.hxlogo.toTexture();
-
-        // create a material with this texture
-        var mat = new h3d.mat.MeshMaterial();
-        // var mat = new h3d.mat.MeshMaterial(tex);
-
-        // our first cube mesh on the 3D scene with our created material
-        obj1 = new Mesh(prim, mat, apiObject);
-
-        // creates another cube, this time with no texture
-        obj2 = new Mesh(prim2, new h3d.mat.MeshMaterial(), apiObject);
-        obj3 = new Mesh(prim3, new h3d.mat.MeshMaterial(), apiObject);
-        obj4 = new Mesh(prim4, new h3d.mat.MeshMaterial(), apiObject);
+        prim = new Kite(apiObject,.2,1,.1,.2, true);
+        prim2 = new Sphere(apiObject,.15,.15,.15);
+        prim3 = new Cube(apiObject,.06,.25,.06);
+        prim4 = new Cube(apiObject,.34,.1,.1);
 
         // set the second cube color
-        obj1.material.color.setColor(0xFFB280);
-        obj2.material.color.setColor(0xFFB280);
-        obj3.material.color.setColor(0xFFB280);
-        obj4.material.color.setColor(0xFFB280);
+        prim.mesh.material.color.setColor(0xFFB280);
+        prim2.mesh.material.color.setColor(0xFFB280);
+        prim3.mesh.material.color.setColor(0xFFB280);
+        prim4.mesh.material.color.setColor(0xFFB280);
 
         // put it above the first cube
-        obj1.y = .5;
-        obj2.y = -.125;
-        obj4.y = .1;
-
-        obj1.material.mainPass.enableLights = true;
-        obj2.material.mainPass.enableLights = true;
-        obj3.material.mainPass.enableLights = true;
-        obj4.material.mainPass.enableLights = true;
+        prim.mesh.y = .5;
+        prim2.mesh.y = -.125;
+        prim4.mesh.y = .1;
     }
 }

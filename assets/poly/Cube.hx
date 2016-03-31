@@ -3,12 +3,13 @@ package assets.poly;
 
 import engine.poly.*;
 
+import h3d.scene.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
 class Cube extends CustomPolygon {
 
-    public function new( x = 1., y = 1., z = 1.,fn = false)
+    public function new( parent:Object, x = 1., y = 1., z = 1.,fn = false)
     {
         var p = [
             new Point(-x/2, -y/2, -z/2),
@@ -34,6 +35,6 @@ class Cube extends CustomPolygon {
         idx.push(0); idx.push(4); idx.push(1);
         idx.push(0); idx.push(2); idx.push(4);
 
-        super(p, idx,fn);
+        super(parent, p, idx,fn);
     }
 }

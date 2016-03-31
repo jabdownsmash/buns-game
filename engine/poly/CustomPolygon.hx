@@ -3,6 +3,7 @@ package engine.poly;
 
 import h3d.col.Point;
 import h3d.prim.*;
+import h3d.scene.*;
 
 class CustomPolygon extends Polygon {
 
@@ -24,7 +25,9 @@ class CustomPolygon extends Polygon {
     public var needsUpdate:Bool = false;
     public var faceNormals:Bool = true;
 
-    public function new( p:Array<Point>, idx:hxd.IndexBuffer,fn = true)
+    public var mesh:Mesh;
+
+    public function new(parent:Object, p:Array<Point>, idx:hxd.IndexBuffer,fn = true)
     {
         pointList = p;
         originalPointList = [];
@@ -52,6 +55,9 @@ class CustomPolygon extends Polygon {
         faceNormals = fn;
         
         reload();
+
+        mesh = new Mesh(this, new h3d.mat.MeshMaterial(), parent);
+        mesh.material.mainPass.enableLights = true;
     }
 
     public function applyTween(tweenApplicator:Point->Point->tweenx909.advanced.StandardTweenX<Point>)

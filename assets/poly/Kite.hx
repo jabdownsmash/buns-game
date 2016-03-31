@@ -3,12 +3,13 @@ package assets.poly;
 
 import engine.poly.*;
 
+import h3d.scene.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
 class Kite extends CustomPolygon {
 
-    public function new( x = 1., y = 1., z = 1., my = .5, fn = false)
+    public function new( parent:Object, x = 1., y = 1., z = 1., my = .5, fn = false)
     {
         var p = [
             new Point( 0,  -y/2,      0),
@@ -29,6 +30,6 @@ class Kite extends CustomPolygon {
         idx.push(5); idx.push(1); idx.push(4);
         idx.push(5); idx.push(4); idx.push(2);
 
-        super(p, idx, fn);
+        super(parent, p, idx, fn);
     }
 }
