@@ -2,6 +2,7 @@
 -main Main
 -lib heaps
 -lib actuate
+-lib evsm-hx
 -lib tweenx
 -D window=800x400
 -D resourcesPath=res

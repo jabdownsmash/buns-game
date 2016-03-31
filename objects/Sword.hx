@@ -9,7 +9,7 @@ import poly.*;
 import h3d.col.Point;
 import h3d.prim.UV;
 
-class Sword extends Object {
+class Sword extends GameObject {
 
     var obj1 : Mesh;
     var obj2 : Mesh;
@@ -39,12 +39,12 @@ class Sword extends Object {
         // var mat = new h3d.mat.MeshMaterial(tex);
 
         // our first cube mesh on the 3D scene with our created material
-        obj1 = new Mesh(prim, mat, this);
+        obj1 = new Mesh(prim, mat, apiObject);
 
         // creates another cube, this time with no texture
-        obj2 = new Mesh(prim2, new h3d.mat.MeshMaterial(), this);
-        obj3 = new Mesh(prim3, new h3d.mat.MeshMaterial(), this);
-        obj4 = new Mesh(prim4, new h3d.mat.MeshMaterial(), this);
+        obj2 = new Mesh(prim2, new h3d.mat.MeshMaterial(), apiObject);
+        obj3 = new Mesh(prim3, new h3d.mat.MeshMaterial(), apiObject);
+        obj4 = new Mesh(prim4, new h3d.mat.MeshMaterial(), apiObject);
 
         // set the second cube color
         obj1.material.color.setColor(0xFFB280);
