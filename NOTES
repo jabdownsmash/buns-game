@@ -101,3 +101,9 @@
 
         // prim.update();
         // prim2.update();
+
+
+
+        
+        // rotate the second cube along a given axis + angle
+        // obj2.setRotateAxis(-0.5, 2, Math.cos(time), time + Math.PI / 2);
