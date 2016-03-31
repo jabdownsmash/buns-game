@@ -1,5 +1,5 @@
 
-package objects;
+package engine.objects;
 
 import h3d.scene.*;
 import hxd.Event;

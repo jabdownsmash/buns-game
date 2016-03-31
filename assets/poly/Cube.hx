@@ -1,5 +1,6 @@
 
-package poly;
+package assets.poly;
+import engine.poly.*;
 
 import h3d.col.Point;
 import h3d.prim.UV;

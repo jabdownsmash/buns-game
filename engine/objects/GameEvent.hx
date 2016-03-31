@@ -1,5 +1,5 @@
 
-package objects;
+package engine.objects;
 
 import haxe.ds.StringMap;
 

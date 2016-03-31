@@ -5,7 +5,6 @@ import tweenx909.EaseX;
 import tweenx909.advanced.UpdateModeX;
 import hxd.Event;
 import hxd.Key;
-import poly.*;
 
 class Main extends hxd.App {
 
@@ -15,7 +14,7 @@ class Main extends hxd.App {
     override function init() {
         motion.actuators.SimpleActuator.stage_onEnterFrame();
         TweenX.updateMode = UpdateModeX.MANUAL;
-        var kek = new objects.Sword(s3d);
+        var kek = new assets.objects.Sword(s3d);
 
         // adds a directional light to the scene
         light = new h3d.scene.DirLight(new h3d.Vector(0.6, 0.5, -0.5), s3d);

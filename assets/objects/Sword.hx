@@ -1,10 +1,11 @@
 
-package objects;
+package assets.objects;
 
 import h3d.scene.*;
 import hxd.Event;
 import hxd.Key;
-import poly.*;
+import assets.poly.*;
+import engine.objects.*;
 
 import h3d.col.Point;
 import h3d.prim.UV;
