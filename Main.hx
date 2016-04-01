@@ -7,11 +7,8 @@ class Main extends Engine {
 
     static function main()
     {
-
-        // initialize embeded ressources
         hxd.Res.initEmbed();
 
-        // start the application
         new Main();
     }
 

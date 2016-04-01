@@ -1,17 +1,12 @@
 
 package assets.poly;
 
-import engine.poly.*;
-
-import h3d.scene.*;
 import h3d.col.Point;
-import h3d.prim.UV;
 
-import engine.objects.*;
+class Sphere extends engine.poly.CustomMesh
+{
 
-class Sphere extends CustomMesh {
-
-    public function new( parent:GameObject, x = 1., y = 1., z = 1., fn = false, layers = 5, longs = 10)
+    public function new( parent , x = 1. , y = 1. , z = 1. , fn = false , layers = 5 , longs = 10 )
     {
         var p = [];
         var idx = new hxd.IndexBuffer();
@@ -71,13 +66,12 @@ class Sphere extends CustomMesh {
         super(parent, p, idx, fn);
     }
 
-    private function getSliceY(i:Int,layers:Int,y:Float)
+    private function getSliceY( i:Int , layers:Int , y:Float)
     {
-        // return (i + 1)/(layers + 1)*y - y/2;
         return -Math.cos((i + 1)/(layers + 1)*Math.PI)*y/2;
     }
 
-    private function getSliceRadius(y:Float,py:Float)
+    private function getSliceRadius( y:Float , py:Float )
     {
         var t = py/(y/2);
         if(t == 0)
@@ -87,16 +81,17 @@ class Sphere extends CustomMesh {
         return py * Math.sqrt(1 - t*t)/t;
     }
 
-    private function sliceFirstPoint(x:Float,y:Float,r:Float,py:Float)
+    private function sliceFirstPoint( x:Float , y:Float , r:Float , py:Float )
     {
         return new Point(x/2/(y/2)*r,py,0);
     }
 
-    private function slicePoint(x:Float,y:Float,z:Float,r:Float,py:Float,j:Int,longs:Int)
+    private function slicePoint( x:Float , y:Float , z:Float , r:Float , py:Float , j:Int , longs:Int )
     {
         var angle = j/longs * Math.PI * 2;
         var px = Math.cos(angle);
         var pz = Math.sin(angle);
         return new Point(px/(y/2)*x/2*r,py,pz/(y/2)*z/2*r);
     }
+
 }

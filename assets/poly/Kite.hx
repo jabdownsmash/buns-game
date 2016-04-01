@@ -1,17 +1,12 @@
 
 package assets.poly;
 
-import engine.poly.*;
-
-import h3d.scene.*;
 import h3d.col.Point;
-import h3d.prim.UV;
 
-import engine.objects.*;
+class Kite extends engine.poly.CustomMesh
+{
 
-class Kite extends CustomMesh {
-
-    public function new( parent:GameObject, x = 1., y = 1., z = 1., my = .5, fn = false)
+    public function new( parent , x = 1. , y = 1. , z = 1. , my = .5 , fn = false)
     {
         var p = [
             new Point( 0,  -y/2,      0),
@@ -34,4 +29,5 @@ class Kite extends CustomMesh {
 
         super(parent, p, idx, fn);
     }
+
 }

@@ -5,7 +5,8 @@ import h3d.col.Point;
 import h3d.prim.*;
 import h3d.scene.*;
 
-class CustomPolygon extends Polygon {
+class CustomPolygon extends Polygon
+{
 
     public var originalPointFilter : Point -> Point = null;
     public var transformFilter : Point->Point -> Point = null;
@@ -37,11 +38,8 @@ class CustomPolygon extends Polygon {
 
         super(p, idx);
 
-        // unindex the faces to create hard edges normals
-        // unindex();
         reload();
 
-        // add face normals
         if(fn)
         {
             addNormals();
@@ -74,7 +72,6 @@ class CustomPolygon extends Polygon {
 
     public function runFilter( filter:Point->Point -> Point)
     {
-        // tweening = false;
         for(i in 0...pointList.length)
         {
             var op = originalPointList[i];
@@ -84,9 +81,43 @@ class CustomPolygon extends Polygon {
             }
             var p = filter(op,pointList[i]);
             if(p != null)
+            {
                 pointList[i].set(p.x,p.y,p.z);
+            }
         }
         needsUpdate = true;
+    }
+
+    public function addVertexNormals()
+    {
+        normals = [];
+        for(point in pointList)
+        {
+            var p = point.clone();
+            p.normalize();
+            normals.push(p);
+        }
+    }
+
+    public function update()
+    {
+        if(transformFilter != null)
+        {
+            runFilter(transformFilter);
+        }
+        if(tweening)
+        {
+            for(i in 0...pointList.length)
+            {
+                var op = tweenPoints[i];
+                pointList[i].set(op.x,op.y,op.z);
+            }
+            needsUpdate = true;
+        }
+        if(needsUpdate)
+        {
+            reload();
+        }
     }
 
     private function setPoints(ps:Array<Point>)
@@ -126,35 +157,4 @@ class CustomPolygon extends Polygon {
         dispose();
     }
 
-    public function addVertexNormals()
-    {
-        normals = [];
-        for(point in pointList)
-        {
-            var p = point.clone();
-            p.normalize();
-            normals.push(p);
-        }
-    }
-
-    public function update()
-    {
-        if(transformFilter != null)
-        {
-            runFilter(transformFilter);
-        }
-        if(tweening)
-        {
-            for(i in 0...pointList.length)
-            {
-                var op = tweenPoints[i];
-                pointList[i].set(op.x,op.y,op.z);
-            }
-            needsUpdate = true;
-        }
-        if(needsUpdate)
-        {
-            reload();
-        }
-    }
 }

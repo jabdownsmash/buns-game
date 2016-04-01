@@ -1,17 +1,12 @@
 
 package assets.poly;
 
-import engine.poly.*;
-
-import h3d.scene.*;
 import h3d.col.Point;
-import h3d.prim.UV;
 
-import engine.objects.*;
+class Cube extends engine.poly.CustomMesh
+{
 
-class Cube extends CustomMesh {
-
-    public function new( parent:GameObject, x = 1., y = 1., z = 1.,fn = false)
+    public function new( parent , x = 1. , y = 1. , z = 1. , fn = false )
     {
         var p = [
             new Point(-x/2, -y/2, -z/2),
@@ -39,4 +34,5 @@ class Cube extends CustomMesh {
 
         super(parent, p, idx,fn);
     }
+
 }

@@ -1,18 +1,18 @@
 
 package assets.scenes;
 
-import engine.GameScene;
-import assets.objects.Sword;
+class Test extends engine.GameScene
+{
 
-class Test extends GameScene {
+    var time = 0.;
 
-    var time : Float = 0.;
-
-    override function init() {
+    override function init()
+    {
         var kek = new assets.objects.Sword(apiObject);
     }
 
-    override function update( dt : Float ) {
+    override function update( dt:Float )
+    {
 
         time += .01*dt;
 

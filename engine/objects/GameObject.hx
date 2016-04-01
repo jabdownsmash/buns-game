@@ -1,33 +1,26 @@
 
 package engine.objects;
 
-import h3d.scene.*;
-import hxd.Event;
-import hxd.Key;
-import poly.*;
-
-import h3d.col.Point;
-import h3d.prim.UV;
 import haxe.ds.StringMap;
+
+import h3d.scene.Object;
 
 class GameObject
 {
+
     public var name:String;
     public var state:evsm.FState<GameObject,GameEvent>;
     public var parent:GameObject;
     public var hasParent:Bool = false;
 
-
     public var apiObject:Object;
 
-
-    public function new(s3d)
+    public function new( s3d )
     {
         apiObject = new Object(s3d);
     }
 
-    
-    public function processEvent(?e:GameEvent, ?s:String)
+    public function processEvent( ?e:GameEvent, ?s:String )
     {
         var event:GameEvent;
         if(e == null && s == null)
@@ -45,7 +38,6 @@ class GameObject
         {
             event = e;
         }
-        // if(s != null)
         else
         {
             event = new GameEvent(s);
