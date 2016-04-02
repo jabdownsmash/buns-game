@@ -1,9 +1,9 @@
 
-package assets.poly;
+package assets.misato.poly;
 
 import h3d.col.Point;
 
-class Sphere extends engine.poly.CustomMesh
+class Sphere extends engine.misato.poly.CustomMesh
 {
 
     public function new( parent , x = 1. , y = 1. , z = 1. , fn = false , layers = 5 , longs = 10 )

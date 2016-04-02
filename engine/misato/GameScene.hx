@@ -2,8 +2,7 @@
 package engine.misato;
 
 import h3d.scene.Scene;
-
-import engine.objects.Object;
+import h3d.scene.Object;
 
 class GameScene extends engine.GameScene
 {
@@ -14,7 +13,7 @@ class GameScene extends engine.GameScene
 
     public function new(e:Engine)
     {
-        super.new(e);
+        super(e);
         apiObject = new Object(e.s3d);
     }
 

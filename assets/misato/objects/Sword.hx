@@ -1,9 +1,9 @@
 
-package assets.objects;
+package assets.misato.objects;
 
-import assets.poly.*;
+import assets.misato.poly.*;
 
-class Sword extends engine.objects.GameObject
+class Sword extends engine.misato.GameObject
 {
 
     var prim:Kite;

@@ -3,7 +3,8 @@ import engine.Engine;
 
 class Main extends Engine {
     
-    var scene:engine.m00.GameScene;
+    var scene:engine.misato.GameScene;
+    // var scene:engine.m00.GameScene;
 
     static function main()
     {
@@ -16,7 +17,8 @@ class Main extends Engine {
     {
         super.init();
 
-        scene = new assets.m00.scenes.Test(this);
+        scene = new assets.misato.scenes.Test(this);
+        // scene = new assets.m00.scenes.Test(this);
         scene.init();
     }
 

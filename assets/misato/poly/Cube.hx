@@ -1,9 +1,9 @@
 
-package assets.poly;
+package assets.misato.poly;
 
 import h3d.col.Point;
 
-class Cube extends engine.poly.CustomMesh
+class Cube extends engine.misato.poly.CustomMesh
 {
 
     public function new( parent , x = 1. , y = 1. , z = 1. , fn = false )

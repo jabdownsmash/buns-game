@@ -3,8 +3,6 @@ package engine.m00;
 
 import h3d.scene.Scene;
 
-// import engine.objects.Object;
-
 class GameScene extends engine.GameScene
 {
 
