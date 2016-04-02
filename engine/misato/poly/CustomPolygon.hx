@@ -8,6 +8,10 @@ import h3d.scene.*;
 class CustomPolygon extends Polygon
 {
 
+    public var x:Float = 0;
+    public var y:Float = 0;
+    public var z:Float = 0;
+
     public var originalPointFilter : Point -> Point = null;
     public var transformFilter : Point->Point -> Point = null;
 
@@ -18,10 +22,6 @@ class CustomPolygon extends Polygon
     public var tweenPoints : Array<Point>;
 
     public var originalPointList : Array<Point>;
-
-    public var x:Float = 0;
-    public var y:Float = 0;
-    public var z:Float = 0;
 
     public var needsUpdate:Bool = false;
     public var faceNormals:Bool = true;

@@ -13,7 +13,6 @@ class Test extends engine.GameScene
 
     override function update( dt:Float )
     {
-
         time += .01*dt;
 
         var dist = 5;

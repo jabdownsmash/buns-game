@@ -3,7 +3,7 @@ import engine.Engine;
 
 class Main extends Engine {
     
-    var scene:engine.GameScene;
+    var scene:engine.m00.GameScene;
 
     static function main()
     {
@@ -16,7 +16,7 @@ class Main extends Engine {
     {
         super.init();
 
-        scene = new assets.scenes.Test(s3d);
+        scene = new assets.m00.scenes.Test(this);
         scene.init();
     }
 
