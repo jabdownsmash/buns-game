@@ -5,21 +5,18 @@ import h3d.scene.Scene;
 
 // import engine.objects.Object;
 
-class GameScene implements engine.GameScene
+class GameScene extends engine.GameScene
 {
 
-    public var name:String;
-
     public var apiObject:h2d.Sprite;
-    public var engine:Engine;
 
     public function new(e:Engine)
     {
+        super(e);
         apiObject = new h2d.Sprite(e.s2d);
-        engine = e;
     }
 
-    public function init()
+    public override function init()
     {
         var mask = new h2d.CachedBitmap(engine.s2d,64, 64);
         mask.x = 200;
@@ -30,7 +27,7 @@ class GameScene implements engine.GameScene
         apiObject = mask;
     }
 
-    public function update(dt:Float)
+    public override function update(dt:Float)
     {
 
     }
