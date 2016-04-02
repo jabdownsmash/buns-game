@@ -1,6 +1,8 @@
 
 package assets.m00.scenes;
 
+import input.KeyboardKeys;
+
 class Test extends engine.m00.GameScene
 {
 
@@ -19,6 +21,22 @@ class Test extends engine.m00.GameScene
             bmp.scaleX = .1;
             bmp.scaleY = .1;
         }
+
+        engine.input
+            .registerInput(KeyboardKeys.RIGHT,'r')
+            .registerInput(KeyboardKeys.LEFT,'l')
+        ;
+
+        engine.input                    
+            .registerFunctionOnKeyDown('r', function()
+                {
+                    apiObject.x += 5;
+                })             
+            .registerFunctionOnKeyDown('l', function()
+                {
+                    apiObject.x -= 5;
+                })        
+        ;
     }
 
 }
