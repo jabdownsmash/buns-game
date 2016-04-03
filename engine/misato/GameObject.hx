@@ -19,6 +19,11 @@ class GameObject
         apiObject = new Object(s3d);
     }
 
+    public function update( dt:Float )
+    {
+        
+    }
+
     public function processEvent( ?e:GameEvent, ?s:String )
     {
         var event:GameEvent;

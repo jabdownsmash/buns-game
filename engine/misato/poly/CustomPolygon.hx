@@ -8,12 +8,9 @@ import h3d.scene.*;
 class CustomPolygon extends Polygon
 {
 
-    public var x:Float = 0;
-    public var y:Float = 0;
-    public var z:Float = 0;
-
     public var originalPointFilter : Point -> Point = null;
     public var transformFilter : Point->Point -> Point = null;
+    public var filters : Array<Point->Point -> Point> = [];
 
     public var pointList : Array<Point>;
     public var idList : hxd.IndexBuffer;
@@ -99,7 +96,7 @@ class CustomPolygon extends Polygon
         }
     }
 
-    public function update()
+    public function update(dt:Float)
     {
         if(transformFilter != null)
         {
@@ -139,11 +136,7 @@ class CustomPolygon extends Polygon
                 var used = [];
                 for( i in 0...idList.length )
                 {
-                    var point = pointList[idList[i]].clone();
-                    point.x += x;
-                    point.y += y;
-                    point.z += z;
-                    p.push(point);
+                    p.push(pointList[idList[i]].clone());
                 }
                 points = p;
                 idx = null;
