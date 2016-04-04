@@ -12,6 +12,10 @@ class CustomMesh extends h3d.scene.Mesh
 
     public var customPolygon:CustomPolygon;
 
+    public var passes:Array<PolyTransformPass> = [];
+
+    public var needsUpdate = false;
+
     public function new( parent:engine.misato.GameObject, p:Array<h3d.col.Point>, idx:hxd.IndexBuffer,fn = true)
     {
         customPolygon = new CustomPolygon(p,idx,fn);
@@ -20,7 +24,27 @@ class CustomMesh extends h3d.scene.Mesh
         super(primitive, new h3d.mat.MeshMaterial(), parent.apiObject);
         material.mainPass.enableLights = true;
 
-        customPolygon.transformFilter = applyTransforms;
+        var transformPass = PolyTransformPass(applyTransforms);
+        transform.priority = -100;
+        addPass(transform);
+    }
+
+    public function addPass( pass:Array<PolyTransformPass> )
+    {
+        if(passes.length == 0)
+        {
+            passes.push(pass);
+        }
+        else
+        {
+            for( i in 0...passes.length)
+            {
+                if(passes[i].priority < pass.priority)
+                {
+                    passes.insert(i,pass);
+                }
+            }
+        }
     }
 
     private function applyTransforms(p1:Point,p2:Point):Point
@@ -51,11 +75,6 @@ class CustomMesh extends h3d.scene.Mesh
         p2.y = x * sz + y * cz;
 
         return null;
-    }
-
-    public function update(dt:Float)
-    {
-        customPolygon.update(dt);
     }
 
 }
