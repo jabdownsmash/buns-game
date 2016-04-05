@@ -8,36 +8,25 @@ import h3d.scene.*;
 class CustomPolygon extends Polygon
 {
 
-    public var originalPointFilter : Point -> Point = null;
-    public var transformFilter : Point->Point -> Point = null;
-    public var filters : Array<Point->Point -> Point> = [];
-
     public var pointList : Array<Point>;
     public var idList : hxd.IndexBuffer;
 
     public var tweening : Bool = false;
     public var tweenPoints : Array<Point>;
 
-    public var originalPointList : Array<Point>;
-
-    public var needsUpdate:Bool = false;
     public var faceNormals:Bool = true;
 
     public function new(p:Array<Point>, idx:hxd.IndexBuffer,fn = true)
     {
         pointList = p;
-        originalPointList = [];
-        for(point in pointList)
-        {
-            originalPointList.push(point.clone());
-        }
         idList = idx;
 
         super(p, idx);
 
-        reload();
+        faceNormals = fn;
+        resetPoints();
 
-        if(fn)
+        if(faceNormals)
         {
             addNormals();
         }
@@ -45,44 +34,15 @@ class CustomPolygon extends Polygon
         {
             addVertexNormals();
         }
-        faceNormals = fn;
-        
-        reload();
     }
 
-    public function applyTween(tweenApplicator:Point->Point->tweenx909.advanced.StandardTweenX<Point>)
+    public function runFilter( filter:Point -> Void)
     {
-        tweenPoints = [];
-        for(i in 0...pointList.length)
+        for(point in points)
         {
-            var np = pointList[i].clone();
-            tweenPoints.push(np);
-            tweenApplicator(np,originalPointList[i]);
+            filter(point);
         }
-        tweening = true;
-    }
-
-    public function finish(e)
-    {
-        tweening = false;
-    }
-
-    public function runFilter( filter:Point->Point -> Point)
-    {
-        for(i in 0...pointList.length)
-        {
-            var op = originalPointList[i];
-            if(originalPointFilter != null)
-            {
-                op = originalPointFilter(op);
-            }
-            var p = filter(op,pointList[i]);
-            if(p != null)
-            {
-                pointList[i].set(p.x,p.y,p.z);
-            }
-        }
-        needsUpdate = true;
+        dispose();
     }
 
     public function addVertexNormals()
@@ -96,37 +56,7 @@ class CustomPolygon extends Polygon
         }
     }
 
-    public function update(dt:Float)
-    {
-        if(transformFilter != null)
-        {
-            runFilter(transformFilter);
-        }
-        if(tweening)
-        {
-            for(i in 0...pointList.length)
-            {
-                var op = tweenPoints[i];
-                pointList[i].set(op.x,op.y,op.z);
-            }
-            needsUpdate = true;
-        }
-        if(needsUpdate)
-        {
-            reload();
-        }
-    }
-
-    private function setPoints(ps:Array<Point>)
-    {
-        for(i in 0...ps.length)
-        {
-            var p = ps[i];
-            pointList[i].set(p.x,p.y,p.z);
-        }
-    }
-
-    private function reload()
+    public function resetPoints()
     {
         if(faceNormals)
         {
@@ -144,7 +74,11 @@ class CustomPolygon extends Polygon
         }
         else
         {
-            points = pointList;
+            points = [];
+            for( point in pointList )
+            {
+                points.push(point);
+            }
             idx = idList;
         }
         dispose();

@@ -23,9 +23,7 @@ class Test extends engine.misato.GameScene
         var dist = 5;
         engine.s3d.camera.pos.set(Math.cos(time) * dist, Math.sin(time) * dist, dist * 0.7 * Math.sin(time));
 
-        // sword.x += dt/10;
         sword.hilt.xRotation += dt/10;
-        sword.hilt.customPolygon.needsUpdate = true;
         sword.update(dt);
     }
 
