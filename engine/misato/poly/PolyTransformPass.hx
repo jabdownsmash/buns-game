@@ -8,10 +8,10 @@ import h3d.col.Point;
 class PolyTransformPass
 {
 
-    public var transformFunc:Point -> Point;
+    public var transformFunc:Point -> Void;
     public var priority = 0;
 
-    public function new( func:Point -> Point )
+    public function new( func:Point -> Void )
     {
         transformFunc = func;
     }

@@ -45,7 +45,7 @@ class CustomMesh extends h3d.scene.Mesh
         }
     }
 
-    private function applyTransforms(p2:Point):Point
+    private function applyTransforms(p2:Point)
     {
         var sx = Math.sin(xRotation);
         var cx = Math.cos(xRotation);
@@ -71,8 +71,6 @@ class CustomMesh extends h3d.scene.Mesh
 
         p2.x = x * cz - y * sz;
         p2.y = x * sz + y * cz;
-
-        return null;
     }
 
     public function update(dt)
@@ -81,6 +79,14 @@ class CustomMesh extends h3d.scene.Mesh
         for(pass in passes)
         {
             customPolygon.runFilter(pass.transformFunc);
+        }
+        if(customPolygon.faceNormals)
+        {
+            customPolygon.addNormals();
+        }
+        else
+        {
+            customPolygon.addVertexNormals();
         }
     }
 
