@@ -2,6 +2,7 @@
 package engine.misato.poly;
 
 import h3d.col.Point;
+import haxe.ds.ArraySort;
 
 class CustomMesh extends h3d.scene.Mesh
 {
@@ -75,6 +76,18 @@ class CustomMesh extends h3d.scene.Mesh
 
     public function update(dt)
     {
+        ArraySort.sort(passes,function(p1,p2)
+            {
+                if(p1.priority < p2.priority)
+                {
+                    return -1;
+                }
+                if(p1.priority > p2.priority)
+                {
+                    return 1;
+                }
+                return 0;
+            });
         customPolygon.resetPoints();
         for(pass in passes)
         {
