@@ -33,7 +33,7 @@ class LinearExpandPass extends engine.misato.poly.PolyTransformPass
             {
                 if(!hasCustomAxis)
                 {
-                    var multiplier = startWidth + (endWidth - startWidth)*((p.y - offset)/height - 1/2);
+                    var multiplier = startWidth + (endWidth - startWidth)*((p.y - offset)/height + 1/2);
                     p.x *= multiplier;
                     p.z *= multiplier;
                 }

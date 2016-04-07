@@ -29,12 +29,13 @@ class Sword extends engine.misato.GameObject
         hilt.material.color.setColor(0xFFB280);
 
         blade.y = .5;
-        handleEnd.y = -.125;
+        handleEnd.y = -.525;
         hilt.y = .1;
 
-        handleEndExpandPass = new LinearExpandPass(1,-1,.1,-.125);
+        handleEndExpandPass = new LinearExpandPass(1,-1,.1);
         handleEnd.addPass(handleEndExpandPass);
         handle.addPass(new LinearExpandPass(2,.5,.25));
+        handleEnd.scaleY = 2;
 
     }
 
@@ -43,7 +44,7 @@ class Sword extends engine.misato.GameObject
     public override function update(dt:Float)
     {
         handleT += dt;
-        handleEndExpandPass.offset = Math.sin(handleT/60)*.125 - .125;
+        handleEndExpandPass.offset = Math.sin(handleT/60)*.05;
 
         blade.update(dt);
         handleEnd.update(dt);
