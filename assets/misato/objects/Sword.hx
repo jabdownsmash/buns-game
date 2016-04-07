@@ -2,6 +2,7 @@
 package assets.misato.objects;
 
 import assets.misato.poly.*;
+import assets.misato.poly.passes.LinearExpandPass;
 
 class Sword extends engine.misato.GameObject
 {
@@ -10,6 +11,8 @@ class Sword extends engine.misato.GameObject
     public var handleEnd:Sphere;
     public var handle:Cube;
     public var hilt:Cube;
+
+    public var handleEndExpandPass:LinearExpandPass;
 
     public function new( s3d )
     {
@@ -29,10 +32,19 @@ class Sword extends engine.misato.GameObject
         handleEnd.y = -.125;
         hilt.y = .1;
 
+        handleEndExpandPass = new LinearExpandPass(2,4,2,-.125);
+        handleEnd.addPass(handleEndExpandPass);
+        handle.addPass(new LinearExpandPass(2,.5,.25));
+
     }
+
+    private var handleT:Float = 0;
 
     public override function update(dt:Float)
     {
+        handleT += dt;
+        handleEndExpandPass.offset = Math.sin(handleT/60);
+
         blade.update(dt);
         handleEnd.update(dt);
         handle.update(dt);
