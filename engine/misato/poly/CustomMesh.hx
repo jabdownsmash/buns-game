@@ -36,12 +36,19 @@ class CustomMesh extends h3d.scene.Mesh
         }
         else
         {
+            var inserted = false;
             for( i in 0...passes.length)
             {
                 if(passes[i].priority < pass.priority)
                 {
                     passes.insert(i,pass);
+                    inserted = true;
+                    break;
                 }
+            }
+            if(!inserted)
+            {
+                passes.push(pass);
             }
         }
     }
