@@ -19,7 +19,7 @@ class Sword extends engine.misato.GameObject
         super(s3d);
 
         blade = new Kite(this, .2, 1, .1, .2, true);
-        handleEnd = new Sphere(this, .15, .15, .15);
+        handleEnd = new Sphere(this, .15, .15, .15, 20);
         handle = new Cube(this, .06, .25, .06);
         hilt = new Cube(this, .34, .1, .1);
 
@@ -32,7 +32,7 @@ class Sword extends engine.misato.GameObject
         handleEnd.y = -.125;
         hilt.y = .1;
 
-        handleEndExpandPass = new LinearExpandPass(2,4,2,-.125);
+        handleEndExpandPass = new LinearExpandPass(1,-1,.1,-.125);
         handleEnd.addPass(handleEndExpandPass);
         handle.addPass(new LinearExpandPass(2,.5,.25));
 
@@ -43,7 +43,7 @@ class Sword extends engine.misato.GameObject
     public override function update(dt:Float)
     {
         handleT += dt;
-        handleEndExpandPass.offset = Math.sin(handleT/60);
+        handleEndExpandPass.offset = Math.sin(handleT/60)*.125 - .125;
 
         blade.update(dt);
         handleEnd.update(dt);
