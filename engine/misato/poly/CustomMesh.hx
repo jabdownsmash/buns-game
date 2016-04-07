@@ -24,7 +24,7 @@ class CustomMesh extends h3d.scene.Mesh
         material.mainPass.enableLights = true;
 
         var transformPass = new PolyTransformPass(applyTransforms);
-        transformPass.priority = -100;
+        transformPass.priority = 100;
         addPass(transformPass);
     }
 
