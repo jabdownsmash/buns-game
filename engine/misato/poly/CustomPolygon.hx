@@ -77,7 +77,7 @@ class CustomPolygon extends Polygon
             points = [];
             for( point in pointList )
             {
-                points.push(point);
+                points.push(point.clone());
             }
             idx = idList;
         }
