@@ -3,6 +3,7 @@ package engine.misato;
 
 import haxe.ds.StringMap;
 import h3d.scene.Object;
+import engine.misato.poly.CustomMesh;
 
 class GameObject
 {
@@ -21,7 +22,10 @@ class GameObject
 
     public function update( dt:Float )
     {
-        
+        for(mesh in meshes)
+        {
+            mesh.update(dt);
+        }
     }
 
     public function processEvent( ?e:GameEvent, ?s:String )
@@ -67,6 +71,17 @@ class GameObject
         return this;
     }
 
+    public function addMesh( mesh:CustomMesh )
+    {
+        meshes.push(mesh);
+    }
+
+    public function removeMesh( mesh:CustomMesh )
+    {
+        meshes.remove(mesh);
+    }
+
+    private var meshes:Array<CustomMesh> = [];
     private var events:Array<GameEvent> = [];
     private var attributes:StringMap<Dynamic> = new StringMap<Dynamic>();
     private var eventTriggers:Array<{eventName:String,func:GameObject->Bool}> = [];

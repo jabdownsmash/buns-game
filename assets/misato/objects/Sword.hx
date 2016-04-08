@@ -45,11 +45,7 @@ class Sword extends engine.misato.GameObject
     {
         handleT += dt;
         handleEndExpandPass.offset = Math.sin(handleT/60)*.05;
-
-        blade.update(dt);
-        handleEnd.update(dt);
-        handle.update(dt);
-        hilt.update(dt);
+        super.update(dt);
     }
 
 }

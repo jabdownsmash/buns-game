@@ -26,6 +26,8 @@ class CustomMesh extends h3d.scene.Mesh
         var transformPass = new PolyTransformPass(applyTransforms);
         transformPass.priority = 100;
         addPass(transformPass);
+
+        parent.addMesh(this);
     }
 
     public function addPass( pass:PolyTransformPass )
