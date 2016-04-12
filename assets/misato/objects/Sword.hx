@@ -18,15 +18,20 @@ class Sword extends engine.misato.GameObject
     {
         super(s3d);
 
-        blade = new Kite(this, .2, 1, .1, .2, true);
+        blade = new Kite(this, .1, 1, .1, .2, true);
         handleEnd = new Sphere(this, .15, .15, .15, 20);
         handle = new Cube(this, .06, .25, .06);
         hilt = new Cube(this, .34, .1, .1);
 
-        blade.material.color.setColor(0xFFB280);
-        handleEnd.material.color.setColor(0xFFB280);
-        handle.material.color.setColor(0xFFB280);
-        hilt.material.color.setColor(0xFFB280);
+        handleEnd.material.color.setColor(0x4ECDC4);
+        handle.material.color.setColor(0xC7F464);
+        hilt.material.color.setColor(0xFF6B6B);
+        blade.material.color.setColor(0xC44D58);
+
+        blade.material.mainPass.enableLights = false;
+        handleEnd.material.mainPass.enableLights = false;
+        handle.material.mainPass.enableLights = false;
+        hilt.material.mainPass.enableLights = false;
 
         blade.y = .5;
         handleEnd.y = -.525;
