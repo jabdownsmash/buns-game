@@ -44,6 +44,41 @@
                 // scene.add( mesh );
 
                 objects = []
+
+                var springPass = function(obj){
+
+                    var speedModifier = 10;
+                    for(var i = 0; i < obj.originalGeom.length; i++)
+                    {
+                        obj.originalGeom[i].speed.x += (obj.originalGeom[i].x  - obj.obj.geometry.vertices[i].x)/speedModifier;
+                        obj.originalGeom[i].speed.y += (obj.originalGeom[i].y  - obj.obj.geometry.vertices[i].y)/speedModifier;
+                        obj.originalGeom[i].speed.z += (obj.originalGeom[i].z  - obj.obj.geometry.vertices[i].z)/speedModifier;
+
+                        obj.originalGeom[i].speed.x *= .9;
+                        obj.originalGeom[i].speed.y *= .9;
+                        obj.originalGeom[i].speed.z *= .9;
+
+                        obj.obj.geometry.vertices[i].x += obj.originalGeom[i].speed.x;
+                        obj.obj.geometry.vertices[i].y += obj.originalGeom[i].speed.y;
+                        obj.obj.geometry.vertices[i].z += obj.originalGeom[i].speed.z;
+
+                        if(Math.abs(obj.obj.geometry.vertices[i].x) < Math.abs(obj.originalGeom[i].x))
+                        {
+                            obj.originalGeom[i].speed.x += (obj.originalGeom[i].x - obj.obj.geometry.vertices[i].x)/speedModifier;    
+                        }
+                        if(Math.abs(obj.obj.geometry.vertices[i].y) < Math.abs(obj.originalGeom[i].y))
+                        {
+                            obj.originalGeom[i].speed.y += (obj.originalGeom[i].y - obj.obj.geometry.vertices[i].y)/speedModifier;    
+                        }
+                        if(Math.abs(obj.obj.geometry.vertices[i].z) < Math.abs(obj.originalGeom[i].z))
+                        {
+                            obj.originalGeom[i].speed.z += (obj.originalGeom[i].z - obj.obj.geometry.vertices[i].z)/speedModifier;    
+                        }
+
+                    }
+
+                    obj.obj.geometry.verticesNeedUpdate = true;
+                }
                 for(var i = 0; i < 20; i++)
                 {
                     for(var j = 0; j < 20; j++)
@@ -53,6 +88,7 @@
                         object.obj.position.y = 40*j - 400;
                         object.obj.position.z = Math.random() * 10 - 5;
                         scene.add(object.obj);
+                        object.passes.push(springPass)
                         objects.push(object);
                     }
                 }
@@ -64,9 +100,9 @@
 
                 var light = new THREE.AmbientLight( 0xFFFFFF ); // soft white light
                 scene.add( light );
-                // var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-                // directionalLight.position.set( 0, 1000, 0 );
-                // scene.add( directionalLight );
+                var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+                directionalLight.position.set( 0, 1000, 0 );
+                scene.add( directionalLight );
                 
                 // var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
                 // scene.add( light );
@@ -146,6 +182,7 @@
                 {
                     // object.update();
                     object.material.color.setHex( 0x2a363b );
+                    object.obj.position.z = Math.random() * 10 - 5;
 
                 }
             }
